@@ -1,0 +1,11 @@
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\obj\x86\Debug\KeyValueCard.csprojResolveAssemblyReference.cache
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\KeyValueCard.exe
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\KeyValueCard.pdb
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\nunit.framework.dll
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\nunit.framework.xml
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\obj\x86\Debug\KeyValueCard.exe
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\obj\x86\Debug\KeyValueCard.pdb
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\Content\circle.xnb
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\Content\square.xnb
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\bin\x86\Debug\Content\triangle.xnb
