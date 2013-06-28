@@ -10,15 +10,15 @@ namespace NUnitTest1
     [TestFixture]
     public class BaseGraphicalMiyagiKeycardTests
     {
-        [Test]
+        [Test(Description = "Test for GetWidth method.")]
         public void TestWidthGetter()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
             Assert.IsTrue(TestCard.GetWidth() == 20);
             
         }
-    
-        [Test]
+
+        [Test(Description = "Test for GetHeight method.")]
         public void TestHeightGetter()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -26,9 +26,9 @@ namespace NUnitTest1
 
         }
 
-  
 
-        [Test]
+
+        [Test(Description = "Test for SetSize method.")]
         public void TestSetSize()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -38,7 +38,7 @@ namespace NUnitTest1
 
         }
 
-        [Test]
+        [Test(Description = "Test for SetSize method. Should throw an error due to both width and height being negative.")]
         public void TestSetSize2()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -46,7 +46,7 @@ namespace NUnitTest1
 
         }
 
-        [Test]
+        [Test(Description = "Test for SetSize method. Should throw an error due to height being negative.")]
         public void TestSetSize3()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -54,7 +54,7 @@ namespace NUnitTest1
 
         }
 
-        [Test]
+        [Test(Description = "Test for SetSize method. Should throw an error due to width being negative.")]
         public void TestSetSize4()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -63,7 +63,7 @@ namespace NUnitTest1
         }
 
 
-        [Test]
+        [Test(Description = "Test for SetPosition method.")]
         public void TestSetPosition()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -72,7 +72,7 @@ namespace NUnitTest1
             Assert.IsTrue(TestCard.GetPosition().Equals(NewPosition));
         }
 
-        [Test]
+        [Test(Description = "Test for GetNameOfShape method.")]
         public void TestGetNameOfShape()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);
@@ -80,7 +80,7 @@ namespace NUnitTest1
         }
 
 
-        [Test]
+        [Test(Description = "Test for GetMathExpressionToDisplay method.")]
         public void TestGetMathExpressionToDisplay()
         {
             BaseGraphicalMiyagiKeyCard TestCard = new BaseGraphicalMiyagiKeyCard("square", "+", 20, 20, 0, 0, 0);

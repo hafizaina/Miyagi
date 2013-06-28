@@ -1,10 +1,4 @@
-﻿// FILE: C:/Users/Delante/Desktop/GitHub Dev/BaseGraphicalMiyagiKeycardClass//BaseGraphicalMiyagiKeyCard.cs
-
-// In this section you can add your own using directives
-// section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 begin
-// section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 end
-
-/// <summary>
+﻿/// <summary>
 /// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
 /// </summary>
 
@@ -12,7 +6,6 @@ using System.Collections;
 
 namespace HumanStorm.Miyagi.Framework
 {
-    //TODO change this class name to foo
     public class BaseGraphicalMiyagiKeyCard
     {
         // Attributes
@@ -72,10 +65,13 @@ namespace HumanStorm.Miyagi.Framework
         /// The height of this block.
         /// </param>
         /// <param name="xPos">
+        /// x-coordinate of the top left corner of the block.
         /// </param>
         /// <param name="yPos">
+        /// y-coordinate of the top left corner of the block.
         /// </param>
         /// <param name="zPos">
+        /// z-coordinate of the top left corner of the block.
         /// </param>
         /// <returns>
         /// BaseGraphicalMiyagiKeyCard.
@@ -99,10 +95,13 @@ namespace HumanStorm.Miyagi.Framework
         ///  @param firstParam a description of this parameter
         /// </summary>
         /// <param name="xPos">
+        /// x-coordinate of the top left corner of the block.
         /// </param>
         /// <param name="yPos">
+        /// y-coordinate of the top left corner of the block.
         /// </param>
         /// <param name="zPos">
+        /// z-coordinate of the top left corner of the block.
         /// </param>
         /// <returns>
         /// </returns>
