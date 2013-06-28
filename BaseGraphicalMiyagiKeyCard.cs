@@ -1,138 +1,184 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+﻿// FILE: C:/Users/Delante/Desktop/GitHub Dev/BaseGraphicalMiyagiKeycardClass//BaseGraphicalMiyagiKeyCard.cs
 
-namespace KeyValueCard
+// In this section you can add your own using directives
+// section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 begin
+// section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 end
+
+/// <summary>
+/// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
+/// </summary>
+
+using System.Collections;
+
+namespace HumanStorm.Miyagi.Framework
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
-    public class BaseGraphicalMiyagiKeyCard : Microsoft.Xna.Framework.Game
+    //TODO change this class name to foo
+    public class BaseGraphicalMiyagiKeyCard
     {
-        public string nameOfShape;
-        //public string mathExpressionToDisplay;
-        //protected int width;
-        //protected int height;
-        public bool isTargeted;
-        public const float SCALE_FACTOR = 1.333f;
-        protected MPoint3D position;
+        // Attributes
 
-        // Vairables needed to construct the keycard
-        //GraphicsDeviceManager graphics;
-        protected SpriteBatch spriteBatch;
-        Texture2D shape;
-        public RenderTarget2D renderTarget;
-        protected bool dragging = false;
-        //Vector2 cardPosition;
+        /// <summary>
+        /// Describes the name of the shape to be drawn on the screen.
+        /// </summary>
+        private string NameOfShape;
+        /// <summary>
+        /// The expression to display adjacent to the shape (i.e., "-A").
+        /// </summary>
+        private string MathExpressionToDisplay;
+        /// <summary>
+        /// The width of this block.
+        /// </summary>
+        protected int Width;
+        /// <summary>
+        /// The height of this key-block
+        /// </summary>
+        protected int Height;
+        /// <summary>
+        /// If this is set to true, then the size of the image is enlarged such that the
+        /// resulting size is the original size MULTIPLIED by the SCALE_FACTOR.  
+        /// For example, if SCALE_FACTOR = 1.2f
+        /// </summary>
+        public bool IsTargeted;
+        /// <summary>
+        /// The factor to multiply the Width and the Height by in order make the image 
+        /// enlarge when the input device (i.e., mouse cursor) is hovering over the shape.
+        /// </summary>
+        public float SCALE_FACTOR = 1.2f;
+        protected MPoint3D Position;
 
-        // Container dimensions
-        protected const float CONTAINER_WIDTH = 300f;
-        protected const float CONTAINER_HEIGHT = 200f;
-        protected const float CONTAINER2_WIDTH = CONTAINER_WIDTH * SCALE;
-        protected const float CONTAINER2_HEIGHT = CONTAINER_HEIGHT * SCALE;
-        protected const float SHAPE_WIDTH = 150;
-        protected const int SHAPE_HEIGHT = 150;
-        protected const float SCALE = 1.333f;
-        protected Rectangle container = new Rectangle(0, 0, (int)CONTAINER_WIDTH, (int)CONTAINER_HEIGHT);
-        protected Rectangle scaledContainer = new Rectangle(0, 0, (int)CONTAINER2_WIDTH, (int)CONTAINER2_HEIGHT);
+        // Associations
 
-        public BaseGraphicalMiyagiKeyCard(string name, /*string mathExpression,*/ /*int width, 
-            int height,*/ float xPos, float yPos, float zPos)
+        /// <summary> 
+        /// </summary>
+        public ArrayList assignedPoint;
+
+        // Operations
+
+        /// <summary>
+        ///  An operation that creates a new BaseGraphicalMiyagiKeyCard object.
+        /// 
+        ///  @param firstParam a description of this parameter
+        /// </summary>
+        /// <param name="nameOfShape">
+        /// The name of the shape to display.
+        /// </param>
+        /// <param name="mathExpression">
+        /// The expression to display adjacent to the shape (i.e., "-A").
+        /// </param>
+        /// <param name="widthOfThisKeyBlock">
+        /// The width of this block.
+        /// </param>
+        /// <param name="heightOfThisKeyBlock">
+        /// The height of this block.
+        /// </param>
+        /// <param name="xPos">
+        /// </param>
+        /// <param name="yPos">
+        /// </param>
+        /// <param name="zPos">
+        /// </param>
+        /// <returns>
+        /// BaseGraphicalMiyagiKeyCard.
+        /// </returns>
+        public BaseGraphicalMiyagiKeyCard(string nameOfShape, string mathExpression, int widthOfThisKeyBlock, int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
         {
-            this.nameOfShape = name;
-            //this.mathExpressionToDisplay = mathExpression;
-            //this.width = width;
-            //this.height = height;
-            position = new MPoint3D(xPos, yPos, zPos);
+            this.NameOfShape = nameOfShape;
+            this.MathExpressionToDisplay = mathExpression;
+            this.Position = new MPoint3D(xPos, yPos, zPos);
+
+            if((widthOfThisKeyBlock <= 0) || (heightOfThisKeyBlock <= 0)){
+                throw new System.ArgumentException("Height or Width of block cannot be less than 0.");
+            }
+            this.Width = widthOfThisKeyBlock;
+            this.Height = heightOfThisKeyBlock;
         }
 
+        /// <summary>
+        ///  An operation that sets the position of the block.
+        /// 
+        ///  @param firstParam a description of this parameter
+        /// </summary>
+        /// <param name="xPos">
+        /// </param>
+        /// <param name="yPos">
+        /// </param>
+        /// <param name="zPos">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public void SetPosition(float xPos, float yPos, float zPos)
         {
-            position.SetPosition(xPos, yPos, zPos);
+            this.Position = new MPoint3D(xPos, yPos, zPos);
+
         }
 
-        //public void SetSize(int width, int height)
-        //{
-        //    this.width = width;
-        //    this.height = height;
-        //}
+        /// <summary>
+        ///  An operation that sets the size of the block.
+        /// 
+        ///  @param firstParam a description of this parameter
+        /// </summary>
+        /// <param name="widthOfThisBlock">
+        /// The width of this key-block.
+        /// </param>
+        /// <param name="heightOfThisBlock">
+        /// The height of this key-block.
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
+        {   
 
-        //public int GetWidth()
-        //{
-        //    return this.width;
-        //}
+            // Exception implemented to ensure negative or 0 sizes are not allowed.
+            if ((widthOfThisBlock <= 0) || (heightOfThisBlock <= 0))
+            {
+                throw new System.ArgumentException("Height or Width of block cannot be less than 0.");
+            }
+            this.Width = widthOfThisBlock;
+            this.Height = heightOfThisBlock;
 
-        //public int GetHeight()
-        //{
-        //    return this.height;
-        //}
+        }
 
-        protected void LoadContent(String shapeName)
+        /// <summary>
+        /// Returns the Width of this object.
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public int GetWidth()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            renderTarget = new RenderTarget2D(GraphicsDevice,
-                GraphicsDevice.PresentationParameters.BackBufferWidth,
-                GraphicsDevice.PresentationParameters.BackBufferHeight);
-            shape = Content.Load<Texture2D>(shapeName);
-            //rectangle = new Texture2D(GraphicsDevice, 1, 1);
-            //rectangle.SetData(new[] { Color.White }); // What does this mean???
-            // TODO: use this.Content to load your game content here
+
+            return this.Width;
         }
 
+        /// <summary>
+        /// Returns the height of the image to be drawn that represents that this object represents.
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public int GetHeight()
+        {
+            return this.Height;
+        }
+
+        public string GetNameOfShape()
+        {
+            return this.NameOfShape;
+        }
+
+        public string GetMathExpressionToDisplay()
+        {
+            return this.MathExpressionToDisplay;
+        }
+
+
+        /// <summary>
+        /// Returns the position of this object.
+        /// </summary>
+        /// <returns>
+        /// </returns>
         public MPoint3D GetPosition()
         {
-            return position.GetPosition();
+            return this.Position;
+
         }
-
-        protected void DrawRenderTarget()
-        {
-            // Set the device to the render target
-            MouseState ms = Mouse.GetState();
-            GraphicsDevice.SetRenderTarget(renderTarget);
-            GraphicsDevice.Clear(Color.White);
-            spriteBatch.Begin();
-            // *****THIS WORKS!*****
-            if (isMouseOver(ms))
-            {
-                float Xval = CONTAINER_WIDTH * SCALE / 2 - SHAPE_WIDTH * SCALE / 2;
-                float Yval = CONTAINER_HEIGHT * SCALE / 2 - SHAPE_HEIGHT * SCALE / 2;
-                MPoint3D pos = new MPoint3D(Xval, Yval, 0);
-                spriteBatch.Draw(shape, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.Zero, SCALE, SpriteEffects.None, 0f);
-            }
-            else
-            {
-                float Xval = CONTAINER_WIDTH / 2 - SHAPE_WIDTH / 2;
-                float Yval = CONTAINER_HEIGHT / 2 - SHAPE_HEIGHT / 2;
-                //Vector2 pos = new Vector2(Xval, Yval);
-                MPoint3D pos = new MPoint3D(Xval, Yval, 0);
-                spriteBatch.Draw(shape, new Vector2(pos.X, pos.Y), Color.White);
-            }
-            // *****END THIS WORKS!*****
-
-            spriteBatch.End();
-
-            // Reset the device to the back buffer
-            GraphicsDevice.SetRenderTarget(null);
-        }
-
-        public bool isMouseOver(MouseState mouseState)
-        {
-            if ((mouseState.X > position.X) && (mouseState.X < (position.X + container.Width)) &&
-                (mouseState.Y > position.Y) && (mouseState.Y < (position.Y + container.Height)))
-            {
-                return true;
-            }
-            return false;
-        }
-
-
-    }
+    } /* end class BaseGraphicalMiyagiKeyCard */
 }
