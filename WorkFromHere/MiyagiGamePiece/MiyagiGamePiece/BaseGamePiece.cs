@@ -1,8 +1,5 @@
 // FILE: C:/Users/ginga/Desktop//BaseGamePiece.cs
 
-// In this section you can add your own using directives
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 begin
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 end
 
 /// <summary>
     /// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
@@ -37,8 +34,6 @@ namespace HumanStorm.Miyagi.Framework
 
         /// <summary> 
         /// </summary>
-        public ArrayList assignedPoint;
-
         // Operations
 
         /// <summary>
@@ -67,9 +62,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public BaseGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CBE begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CBE end
-
+           
         }
 
         /// <summary>
@@ -87,8 +80,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void SetPosition(float xPos, float yPos, float zPos)
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CD7 begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CD7 end
+         
 
         }
 
@@ -101,10 +93,9 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
+        public virtual void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CE0 begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CE0 end
+          
 
         }
 
@@ -115,9 +106,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public int GetWidth()
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000010CC begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000010CC end
-
+            return Width;
         }
 
         /// <summary>
@@ -127,9 +116,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public int GetHeight()
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000010CF begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000010CF end
-
+            return Height;
         }
 
         /// <summary>
@@ -139,10 +126,9 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         /// <returns>
         /// </returns>
-        public MPoint3D GetPosition()
+        public virtual MPoint3D GetPosition()
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000011B0 begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:00000000000011B0 end
+            return Position;
 
         }
     } /* end class BaseGamePiece */
