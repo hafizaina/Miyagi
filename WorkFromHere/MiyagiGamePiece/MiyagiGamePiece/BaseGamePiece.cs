@@ -93,7 +93,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
+        public virtual void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
           
 
@@ -126,7 +126,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         /// <returns>
         /// </returns>
-        public MPoint3D GetPosition()
+        public virtual MPoint3D GetPosition()
         {
             return Position;
 
