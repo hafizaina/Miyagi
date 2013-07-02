@@ -11,23 +11,45 @@ namespace HumanStorm.Miyagi.Framework
     public class BaseGamePiece
     {
         // Attributes
+        /// <summary>
+        /// This is either a math expression, or the name of the image file to draw.
+        /// </summary>
+        public readonly string ContentToDraw;
 
-        public string NameOfShape;
-
-        public string MathExpressionToDisplay;
-
+      
+        /// <summary>
+        /// The width of this block.
+        /// </summary>
         protected int Width;
 
+        /// <summary>
+        /// The height of this key-block.
+        /// </summary>
         protected int Height;
 
+        /// <summary>
+        /// If this is set to true, then the size of the image is enlarged such that the resulting size is the original size 
+        /// MULTIPLIED by the SCALE_FACTOR.  For example, if SCALE_FACTOR = 1.2f
+        /// </summary>
         public bool IsTargeted;
 
+        /// <summary>
+        /// The factor to multiply the Width and the Height by in order 
+        /// make the image enlarge when the input device (i.e., mouse cursor) is hovering over the shape.
+        /// </summary>
         public float SCALE_FACTOR = 1.2f;
 
         protected MPoint3D Position;
 
+        /// <summary>
+        /// Set this to true if ContentToDraw is a math expression. This will cause text to be drawn on the screen.  
+        /// Otherwise, set to false if ContentToDraw is the name of an image to draw.
+        /// </summary>
         public bool IsMathExpression;
 
+        /// <summary>
+        /// True if the current object is selected, and false otherwise.
+        /// </summary>
         public bool IsSelected;
 
         // Associations
@@ -57,18 +79,30 @@ namespace HumanStorm.Miyagi.Framework
         /// The x-coordinate of the top left corner of this GamePiece displayed on the screen.
         /// </param>
         /// <param name="yPos">
+        /// The y-coordinate of the top left corner of this GamePiece displayed on the screen.
         /// </param>
         /// <param name="zPos">
+        /// The z-coordinate of the top left corner of this GamePiece displayed on the screen.
         /// </param>
         /// <returns>
         /// </returns>
         public BaseGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
-        {
+        {   
            
+            this.ContentToDraw = contentToDraw;
+            this.IsMathExpression = isContentToDrawAMathExpression;
+            this.Position = new MPoint3D(xPos, yPos, zPos);
+
+            if ((widthOfThisGamePiece <= 0) || (heightOfGamePiece <= 0))
+            {
+                throw new System.ArgumentException("Height or Width of block cannot be less than 0.");
+            }
+            this.Width = widthOfThisGamePiece;
+            this.Height = heightOfGamePiece;
         }
 
         /// <summary>
-        ///  An operation that does...
+        ///  An operation that sets the position of the block.
         /// 
         ///  @param firstParam a description of this parameter
         /// </summary>
@@ -82,7 +116,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public virtual void SetPosition(float xPos, float yPos, float zPos)
         {
-         
+            this.Position = new MPoint3D(xPos, yPos, zPos);
 
         }
 
@@ -97,7 +131,13 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public virtual void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
-          
+            // Exception implemented to ensure negative or 0 sizes are not allowed.
+            if ((widthOfThisBlock <= 0) || (heightOfThisBlock <= 0))
+            {
+                throw new System.ArgumentException("Height or Width of block cannot be less than 0.");
+            }
+            this.Width = widthOfThisBlock;
+            this.Height = heightOfThisBlock;
 
         }
 
@@ -108,7 +148,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public int GetWidth()
         {
-            return Width;
+            return this.Width;
         }
 
         /// <summary>
@@ -118,7 +158,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public int GetHeight()
         {
-            return Height;
+            return this.Height;
         }
 
         /// <summary>
@@ -130,8 +170,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public virtual MPoint3D GetPosition()
         {
-            return Position;
+            return this.Position;
 
         }
+
+
     } /* end class BaseGamePiece */
 }
