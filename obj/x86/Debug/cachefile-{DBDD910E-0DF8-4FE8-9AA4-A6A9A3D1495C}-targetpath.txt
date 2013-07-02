@@ -1,3 +1,0 @@
-Content\circle.xnb
-Content\square.xnb
-Content\triangle.xnb
