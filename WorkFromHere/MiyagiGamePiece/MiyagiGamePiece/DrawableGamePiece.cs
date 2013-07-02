@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace HumanStorm.Miyagi.Framework
 {
 
-    private class DrawableGamePiece : BaseGamePiece, DrawableGameComponent
+    public class DrawableGamePiece : BaseGamePiece
     {
         // Attributes
 
@@ -60,6 +60,7 @@ namespace HumanStorm.Miyagi.Framework
         /// <returns>
         /// </returns>
         public DrawableGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+            : base(contentToDraw, isContentToDrawAMathExpression, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CA1 begin
             // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CA1 end
@@ -127,7 +128,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void SetPosition(float xPos, float yPos, float zPos)
+        public override void SetPosition(float xPos, float yPos, float zPos)
         {
             // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AD6 begin
             // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AD6 end
@@ -145,7 +146,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
+        public override void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
             // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AE1 begin
             // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AE1 end
@@ -175,8 +176,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public Vector3 GetScreenCoordinatesOfMouse()
         {
-            // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AF9 begin
-            // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000AF9 end
+            return new Vector3();
 
         }
 
@@ -187,8 +187,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public Vector3 GetPositionWithRespectToViewPort()
         {
-            // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000B0F begin
-            // section -64--88-56-1-72ba4d10:13f9ac2df4c:-8000:0000000000000B0F end
+            return new Vector3();
 
         }
 
@@ -199,9 +198,9 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         /// <returns>
         /// </returns>
-        public MPoint3D GetPosition()
+        public override MPoint3D GetPosition()
         {
-            return new MPoint3D(0, 0, 0);
+            return base.GetPosition();
         }
     } /* end class DrawableGamePiece */
 }

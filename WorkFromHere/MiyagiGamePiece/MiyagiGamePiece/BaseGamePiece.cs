@@ -37,7 +37,7 @@ namespace HumanStorm.Miyagi.Framework
 
         /// <summary> 
         /// </summary>
-        public ArrayList assignedPoint;
+       // public ArrayList assignedPoint;
 
         // Operations
 
