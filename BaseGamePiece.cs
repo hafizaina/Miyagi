@@ -1,9 +1,5 @@
 // FILE: C:/Users/ginga/Desktop//BaseGamePiece.cs
-
-// In this section you can add your own using directives
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 begin
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CB6 end
-
+//CHANGED HERE
 /// <summary>
     /// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
      /// </summary>
@@ -63,9 +59,8 @@ public class BaseGamePiece
     /// </returns>
     public BaseGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
     {
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CBE begin
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000CBE end
-
+       // this.NameOfShape = contentToDraw
+       
     }
 
     /// <summary>
