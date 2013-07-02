@@ -34,7 +34,7 @@ namespace HumanStorm.Miyagi.Framework
 
         /// <summary> 
         /// </summary>
-       public ArrayList assignedPoint;
+       //public ArrayList assignedPoint;
 
         // Operations
 
@@ -80,7 +80,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void SetPosition(float xPos, float yPos, float zPos)
+        public virtual void SetPosition(float xPos, float yPos, float zPos)
         {
          
 
