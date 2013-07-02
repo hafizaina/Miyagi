@@ -7,15 +7,15 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\Hafiz\Documents\MIYAGI\Projects\MiyagiGamePiece\MiyagiGamePieceContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\Hafiz\Documents\MIYAGI\Projects\MiyagiGamePiece\MiyagiGamePiece\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\Hafiz\Documents\MIYAGI\Projects\MiyagiGamePiece\MiyagiGamePieceContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\Hafiz\Documents\MIYAGI\Projects\MiyagiGamePiece\MiyagiGamePiece\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\Delante\Desktop\GitHub Dev\Hafiz's Code\Miyagi\WorkFromHere\MiyagiGamePiece\MiyagiGamePieceContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\Delante\Desktop\GitHub Dev\Hafiz's Code\Miyagi\WorkFromHere\MiyagiGamePiece\MiyagiGamePiece\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\Delante\Desktop\GitHub Dev\Hafiz's Code\Miyagi\WorkFromHere\MiyagiGamePiece\MiyagiGamePieceContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\Delante\Desktop\GitHub Dev\Hafiz's Code\Miyagi\WorkFromHere\MiyagiGamePiece\MiyagiGamePiece\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2013-05-28T19:41:51.9640961-04:00</Value>
+        <Value>2013-06-22T14:19:28.3898991-04:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace KeyValueCard
+namespace HumanStorm.Miyagi.Framework
 {
     public class MPoint3D
     {
@@ -44,5 +44,18 @@ namespace KeyValueCard
                 "Y = " + this.Y + "Z = " + this.Z;
         }
 
+        /// <summary>
+        /// This compares the X, Y, and Z components of two MPoint3D objects for equality.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public bool Equals(MPoint3D obj)
+        {
+            if ((this.X == obj.X) && (this.Y == obj.Y) && (this.Z == obj.Z))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
