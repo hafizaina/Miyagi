@@ -1,4 +1,4 @@
-// FILE: C:/Users/ginga/Desktop//BaseGamePiece.cs
+
 
 
 /// <summary>
@@ -11,11 +11,6 @@ namespace HumanStorm.Miyagi.Framework
     public class BaseGamePiece
     {
         // Attributes
-        /// <summary>
-        /// This is either a math expression, or the name of the image file to draw.
-        /// </summary>
-        public readonly string ContentToDraw;
-
       
         /// <summary>
         /// The width of this block.
@@ -40,12 +35,6 @@ namespace HumanStorm.Miyagi.Framework
         public float SCALE_FACTOR = 1.2f;
 
         protected MPoint3D Position;
-
-        /// <summary>
-        /// Set this to true if ContentToDraw is a math expression. This will cause text to be drawn on the screen.  
-        /// Otherwise, set to false if ContentToDraw is the name of an image to draw.
-        /// </summary>
-        public bool IsMathExpression;
 
         /// <summary>
         /// True if the current object is selected, and false otherwise.
@@ -84,11 +73,9 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+        public BaseGamePiece(int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
         {   
            
-            this.ContentToDraw = contentToDraw;
-            this.IsMathExpression = isContentToDrawAMathExpression;
             this.Position = new MPoint3D(xPos, yPos, zPos);
 
             if ((widthOfThisGamePiece <= 0) || (heightOfGamePiece <= 0))
