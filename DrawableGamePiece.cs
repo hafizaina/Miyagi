@@ -1,6 +1,7 @@
 // FILE: C:/Users/ginga/Desktop//DrawableGamePiece.cs
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 /// <summary>
     /// This is the XNA framework specific derived class.
@@ -16,14 +17,38 @@ namespace HumanStorm.Miyagi.Framework
         public Color ColorOfShapeAndMathExpression;
         public Rectangle RectangleEnclosingThisImage;
         public SpriteFont Font;
-        public Rectangle RectangleContainingThisObject;
         public SpriteBatch SharedSpriteBatch;
         public Rectangle ViewPort;
 
-        // The position data for this object.
-        int xPos;
-        int yPos;
-        int zPos;
+#region Containers
+        public Rectangle RectangleContainingThisObject;
+        public Rectangle ScaledRectangleContainingThisOgject;
+        private bool IsScaled;
+#endregion Containers
+
+#region ScaledContianerInfo
+        private float ScaledContainerWidth;
+        private float ScaledContainerHeight;
+#endregion ScaledContainerInfo
+
+#region PositionData
+        /// <summary>
+        /// X coordinate at center of normal container
+        /// </summary>
+        private float xCenter;
+        /// <summary>
+        /// Y coordinate at center of normal container
+        /// </summary>
+        private float yCenter;
+        /// <summary>
+        /// X coordinate of enlargened container
+        /// </summary>
+        private float xScaledPosition;
+        /// <summary>
+        /// Y coordinate of enlargened container
+        /// </summary>
+        private float yScaledPosition;
+#endregion PositionData
 
         // Operations
 
@@ -53,7 +78,12 @@ namespace HumanStorm.Miyagi.Framework
         public DrawableGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
             : base(contentToDraw, isContentToDrawAMathExpression, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
-
+            RectangleContainingThisObject = new Rectangle(0, 0, Width, Height);
+            ScaledContainerWidth = (float)RectangleContainingThisObject.Width * SCALE_FACTOR;
+            ScaledContainerHeight = (float)RectangleContainingThisObject.Height * SCALE_FACTOR;
+            // This line needs to be revised because width and height properties of the rectangle
+            // must be given in int form, whereas multiplying by the SCALE_FACTOR converts it into a float
+            ScaledRectangleContainingThisOgject = new Rectangle(0, 0, (int)ScaledContainerWidth, (int)ScaledContainerHeight);
         }
 
         /// <summary>
@@ -113,6 +143,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public override void SetPosition(float xPos, float yPos, float zPos)
         {
+            base.SetPosition(xPos, yPos, zPos);
         }
 
         /// <summary>
@@ -128,6 +159,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public override void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
+            base.SetSize(widthOfThisBlock, heightOfThisBlock);
         }
 
         /// <summary>
@@ -175,6 +207,20 @@ namespace HumanStorm.Miyagi.Framework
         public override MPoint3D GetPosition()
         {
             return base.GetPosition();
+        }
+
+        public bool isMouseOver(MouseState mouseState, bool scale)
+        {
+            if (IsScaled)
+            {
+                return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + ScaledRectangleContainingThisOgject.Width)) &&
+                (mouseState.Y > yScaledPosition) && (mouseState.Y < (yScaledPosition + ScaledRectangleContainingThisOgject.Height)));
+            }
+            else
+            {
+                return ((mouseState.X > Position.X) && (mouseState.X < (Position.X + RectangleContainingThisObject.Width)) &&
+                    (mouseState.Y > Position.Y) && (mouseState.Y < (Position.Y + RectangleContainingThisObject.Height)));
+            }
         }
     } /* end class DrawableGamePiece */
 }

@@ -37,7 +37,7 @@ namespace HumanStorm.Miyagi.Framework
         /// The factor to multiply the Width and the Height by in order 
         /// make the image enlarge when the input device (i.e., mouse cursor) is hovering over the shape.
         /// </summary>
-        public float SCALE_FACTOR = 1.2f;
+        public const float SCALE_FACTOR = 1.2f;
 
         protected MPoint3D Position;
 
