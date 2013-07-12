@@ -2,13 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-
-
-
-// In this section you can add your own using directives
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000C8F begin
-    // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000C8F end
-
 /// <summary>
     /// This is the XNA framework specific derived class.
      /// </summary>
@@ -19,20 +12,18 @@ namespace HumanStorm.Miyagi.Framework
     public class DrawableGamePiece : BaseGamePiece
     {
         // Attributes
-
         public Texture2D TextureForShape;
-
         public Color ColorOfShapeAndMathExpression;
-
         public Rectangle RectangleEnclosingThisImage;
-
         public SpriteFont Font;
-
         public Rectangle RectangleContainingThisObject;
-
         public SpriteBatch SharedSpriteBatch;
-
         public Rectangle ViewPort;
+
+        // The position data for this object.
+        int xPos;
+        int yPos;
+        int zPos;
 
         // Operations
 
