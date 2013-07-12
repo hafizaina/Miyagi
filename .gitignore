@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Directories #
 ###############
 bin/
@@ -10,3 +11,36 @@ Properties/
 *.user
 *.ico
 *.suo
+=======
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.Debug.cachefile
+# Compiled Dynamic libraries
+*.so
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.csproj
+
+
+[Oo]bj
+[Bb]in
+!NUnit-2.6.0.12051/NUnit-2.6.0.12051/bin/
+*.user
+*.suo
+*.[Cc]ache
+*.bak
+*.ncb
+*.log 
+*.xml
+*.DS_Store
+[Tt]humbs.db 
+_ReSharper.*
+*.resharper
+Ankh.NoLoad
+>>>>>>> 3cfc1fd2adcddeae5eeba7bf7932cfa2d48b4382
