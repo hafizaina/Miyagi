@@ -76,7 +76,11 @@ namespace HumanStorm.Miyagi.Framework
         /// <returns>
         /// </returns>
         public DrawableGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+<<<<<<< HEAD
             : base(widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+=======
+            : base(contentToDraw, isContentToDrawAMathExpression, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+>>>>>>> b913c937e13d55ee93b255f85ec19bdd12e983fe
         {
             RectangleContainingThisObject = new Rectangle(0, 0, Width, Height);
             ScaledContainerWidth = (float)RectangleContainingThisObject.Width * SCALE_FACTOR;
