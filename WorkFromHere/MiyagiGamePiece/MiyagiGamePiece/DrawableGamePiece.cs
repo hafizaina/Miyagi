@@ -8,17 +8,24 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+<<<<<<< HEAD
 using Microsoft.Xna.Framework.GamerServices;
 
 /// <summary>
 /// This class Returns the absolute position of the top left corner of this DrawableGamePiece with 
 /// respect to the top left-corner of the Graphics Display device.
+=======
+
+/// <summary>
+/// This is the XNA framework specific derived class.
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
 /// </summary>
 /// 
 namespace HumanStorm.Miyagi.Framework
 {
 
     public class DrawableGamePiece : BaseGamePiece
+<<<<<<< HEAD
     {   
         
         //Attributes
@@ -55,6 +62,49 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         public Rectangle ViewPort;
         
+=======
+    {
+        // Attributes
+        public Texture2D TextureForShape;
+        public Color ColorOfShapeAndMathExpression;
+        public Rectangle RectangleEnclosingThisImage;
+        public SpriteFont Font;
+        public SpriteBatch SharedSpriteBatch;
+        public Rectangle ViewPort;
+
+        #region Containers
+        public Rectangle RectangleContainingThisObject;
+        public Rectangle ScaledRectangleContainingThisOgject;
+        private bool IsScaled;
+        #endregion Containers
+
+        #region ScaledContianerInfo
+        private float ScaledContainerWidth;
+        private float ScaledContainerHeight;
+        #endregion ScaledContainerInfo
+
+        #region PositionData
+        /// <summary>
+        /// X coordinate at center of normal container
+        /// </summary>
+        private float xCenter;
+        /// <summary>
+        /// Y coordinate at center of normal container
+        /// </summary>
+        private float yCenter;
+        /// <summary>
+        /// X coordinate of enlargened container
+        /// </summary>
+        private float xScaledPosition;
+        /// <summary>
+        /// Y coordinate of enlargened container
+        /// </summary>
+        private float yScaledPosition;
+        #endregion PositionData
+
+        // Operations
+
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         /// <summary>
         ///The color of the shape, and the color of the math expression, to be drawn on the screen.
         /// </summary>
@@ -78,6 +128,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
+<<<<<<< HEAD
         public DrawableGamePiece(Color colorOfGamePiece, SpriteBatch sharedSprite, string nameOfShape, int widthOfThisGamePiece, int 
             heightOfGamePiece, float xPos, float yPos, float zPos)
             : base
@@ -96,6 +147,21 @@ namespace HumanStorm.Miyagi.Framework
 
 
              this.SharedSpriteBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
+=======
+        public DrawableGamePiece(string contentToDraw, bool isContentToDrawAMathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+<<<<<<< HEAD
+            : base(widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+=======
+            : base(contentToDraw, isContentToDrawAMathExpression, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+>>>>>>> b913c937e13d55ee93b255f85ec19bdd12e983fe
+        {
+            RectangleContainingThisObject = new Rectangle(0, 0, Width, Height);
+            ScaledContainerWidth = (float)RectangleContainingThisObject.Width * SCALE_FACTOR;
+            ScaledContainerHeight = (float)RectangleContainingThisObject.Height * SCALE_FACTOR;
+            // This line needs to be revised because width and height properties of the rectangle
+            // must be given in int form, whereas multiplying by the SCALE_FACTOR converts it into a float
+            ScaledRectangleContainingThisOgject = new Rectangle(0, 0, (int)ScaledContainerWidth, (int)ScaledContainerHeight);
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         }
 
         /// <summary>
@@ -115,6 +181,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void Draw(GameTime time)
         {
+<<<<<<< HEAD
             if (IsTargeted == true)
             {
                 //Draw the game piece with width and height affected by scale-factor. Does this mean make a new rectangle with specs
@@ -124,6 +191,8 @@ namespace HumanStorm.Miyagi.Framework
             {
                 //leave it as is?
             }
+=======
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         }
 
         /// <summary>
@@ -145,7 +214,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void Update(GameTime time)
         {
+<<<<<<< HEAD
             
+=======
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         }
 
         /// <summary>
@@ -194,8 +266,11 @@ namespace HumanStorm.Miyagi.Framework
         public override void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
             base.SetSize(widthOfThisBlock, heightOfThisBlock);
+<<<<<<< HEAD
             this.RectangleContainingThisObject.Width = widthOfThisBlock;
             this.RectangleContainingThisObject.Height = heightOfThisBlock;
+=======
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         }
 
         /// <summary>
@@ -218,8 +293,13 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public Vector3 GetScreenCoordinatesOfMouse()
         {
+<<<<<<< HEAD
             Vector3 mouseState = new Vector3(Mouse.GetState().X, Mouse.GetState().Y,0);
             return mouseState;
+=======
+            return new Vector3();
+
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
         }
 
         /// <summary>
@@ -242,8 +322,28 @@ namespace HumanStorm.Miyagi.Framework
         /// <returns>
         /// </returns>
         public override MPoint3D GetPosition()
+<<<<<<< HEAD
         {
             return base.GetPosition();
         }       
+=======
+        {
+            return base.GetPosition();
+        }
+
+        public bool isMouseOver(MouseState mouseState, bool scale)
+        {
+            if (IsScaled)
+            {
+                return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + ScaledRectangleContainingThisOgject.Width)) &&
+                (mouseState.Y > yScaledPosition) && (mouseState.Y < (yScaledPosition + ScaledRectangleContainingThisOgject.Height)));
+            }
+            else
+            {
+                return ((mouseState.X > Position.X) && (mouseState.X < (Position.X + RectangleContainingThisObject.Width)) &&
+                    (mouseState.Y > Position.Y) && (mouseState.Y < (Position.Y + RectangleContainingThisObject.Height)));
+            }
+        }
+>>>>>>> 2b296f3500b520ef69b30243560efe26892ddfef
     } /* end class DrawableGamePiece */
 }

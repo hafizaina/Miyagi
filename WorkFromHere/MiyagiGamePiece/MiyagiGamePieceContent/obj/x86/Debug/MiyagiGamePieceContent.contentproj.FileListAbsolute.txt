@@ -1,2 +1,1 @@
-C:\Users\Hafiz\Documents\MIYAGI\Projects\MiyagiGamePiece\MiyagiGamePieceContent\obj\x86\Debug\MiyagiGamePieceContent.contentprojResolveAssemblyReference.cache
-C:\Users\Delante\Desktop\GitHub Dev\Hafiz's Code\Miyagi\WorkFromHere\MiyagiGamePiece\MiyagiGamePieceContent\obj\x86\Debug\MiyagiGamePieceContent.contentprojResolveAssemblyReference.cache
+C:\Users\Hafiz\Documents\Visual Studio 2010\Projects\KeyValueCard\KeyValueCard\KeyValueCard\WorkFromHere\MiyagiGamePiece\MiyagiGamePieceContent\obj\x86\Debug\MiyagiGamePieceContent.contentprojResolveAssemblyReference.cache
