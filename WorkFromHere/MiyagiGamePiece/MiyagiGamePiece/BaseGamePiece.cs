@@ -1,6 +1,4 @@
 
-
-
 /// <summary>
     /// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
      /// </summary>
