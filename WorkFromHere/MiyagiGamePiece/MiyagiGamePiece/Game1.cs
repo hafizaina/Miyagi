@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace MiyagiGamePiece
+namespace HumanStorm.Miyagi.Framework
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,11 +18,17 @@ namespace MiyagiGamePiece
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        DrawableGameMathExpression test;
+        
+          
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            Content.RootDirectory = "MiyagiContent";
+            
+
+            
         }
 
         /// <summary>
@@ -82,6 +88,9 @@ namespace MiyagiGamePiece
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+           SpriteFont Font = Content.Load<SpriteFont>("Spritey");
+            test = new DrawableGameMathExpression(spriteBatch,Font, Color.Red, new Rectangle(0, 0, 20, 20), "A", 10, 10, 5, 5, 0);
+            test.Draw(gameTime);
 
             // TODO: Add your drawing code here
 
