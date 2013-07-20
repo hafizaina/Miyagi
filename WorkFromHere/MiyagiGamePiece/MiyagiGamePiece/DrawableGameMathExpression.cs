@@ -20,7 +20,6 @@ namespace HumanStorm.Miyagi.Framework
         // Attributes
 
         public SpriteFont Font;
-
         public String MathExpression;
 
         // Operations
@@ -58,19 +57,35 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableGameMathExpression(SpriteBatch sharedSprite, Color colorOfExpression, Rectangle viewPort, String mathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
-        {
+        public DrawableGameMathExpression(SpriteBatch sharedSprite,SpriteFont spriteFont, Color colorOfExpression, Rectangle viewPort, String mathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+        :base(colorOfExpression, sharedSprite, viewPort, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos){
+            
             String regularExpressionPattern = @"^-?(?i)[A-Z]\z";
-
+            
+            this.Font = spriteFont;
+            
             if ((System.Text.RegularExpressions.Regex.IsMatch(mathExpression, regularExpressionPattern) == true))
             {
                 this.MathExpression = mathExpression;
             }
+            
             else
             {
                 throw new System.ArgumentException("This math expression must be a single-letter variable that is positive or negative.");
             }
 
+        }
+        
+        public override void Draw(GameTime time)
+        {
+            this.SharedSpriteBatch.Begin();
+            this.SharedSpriteBatch.DrawString(Font, this.MathExpression, new Vector2(20, 45), Color.White);
+            this.SharedSpriteBatch.End();
+        }
+
+
+        public override void Update(GameTime time)
+        {
         }
     }
 }
