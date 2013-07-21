@@ -19,16 +19,16 @@ namespace HumanStorm.Miyagi.Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DrawableGameMathExpression test;
-        
-          
+        Texture2D backgroundRectColor;
+
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "MiyagiContent";
-            
 
-            
+
+
         }
 
         /// <summary>
@@ -52,6 +52,9 @@ namespace HumanStorm.Miyagi.Framework
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            backgroundRectColor = new Texture2D(GraphicsDevice, 1, 1);
+            backgroundRectColor.SetData(new Color[] { Color.White });
+            
 
             // TODO: use this.Content to load your game content here
         }
@@ -83,16 +86,18 @@ namespace HumanStorm.Miyagi.Framework
 
         /// <summary>
         /// This is called when the game should draw itself.
+
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-           SpriteFont Font = Content.Load<SpriteFont>("Spritey");
-            test = new DrawableGameMathExpression(spriteBatch,Font, Color.Red, new Rectangle(0, 0, 20, 20), "A", 10, 10, 5, 5, 0);
+            SpriteFont Font = Content.Load<SpriteFont>("Spritey");
+            test = new DrawableGameMathExpression(backgroundRectColor,spriteBatch, Font, Color.Red, new Rectangle(75, 50, 200, 200), "A", 100, 100, 50, 40, 0);
+            
             test.Draw(gameTime);
 
-            // TODO: Add your drawing code here
+            
 
             base.Draw(gameTime);
         }
