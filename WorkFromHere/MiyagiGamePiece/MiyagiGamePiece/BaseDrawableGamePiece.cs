@@ -70,6 +70,11 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         public Color ColorOfShape;
 
+        /// <summary>
+        /// Texture needed to color the background of the keyblock.
+        /// </summary>
+        public Texture2D backgroundRectangleColor;
+
         /// <param name="contentToDraw">
         /// </param>
         /// <param name="isContentToDrawAMathExpression">
@@ -88,12 +93,13 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseDrawableGamePiece(Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
+        public BaseDrawableGamePiece(Texture2D backgroundColor ,Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
             heightOfGamePiece, float xPos, float yPos, float zPos)
             : base
                 (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.ViewPort = viewPort;
+            this.backgroundRectangleColor = backgroundColor;
             this.ColorOfShape = colorOfGamePiece;
        
             this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y), this.Width, this.Height);
