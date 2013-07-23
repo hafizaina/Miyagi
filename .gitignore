@@ -33,6 +33,10 @@ Properties/
 *.a
 *.csproj
 
+# Specific files
+*/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Game1.cs
+*/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Program.cs
+
 
 [Oo]bj
 [Bb]in

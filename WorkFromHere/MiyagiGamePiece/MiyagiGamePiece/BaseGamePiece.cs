@@ -4,6 +4,8 @@
      /// </summary>
      /// 
 using Microsoft.Xna.Framework.Input;
+
+
 namespace HumanStorm.Miyagi.Framework
 {
 

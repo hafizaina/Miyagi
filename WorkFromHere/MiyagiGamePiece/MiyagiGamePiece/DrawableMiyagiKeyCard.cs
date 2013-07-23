@@ -15,9 +15,9 @@ namespace HumanStorm.Miyagi.Framework
     {
         // Attributes
 
-        public DrawableGamePiece ShapeGamePiece;
+        //public DrawableGamePiece ShapeGamePiece;
 
-        public DrawableGamePiece MathExpressionGamePiece;
+        //public DrawableGamePiece MathExpressionGamePiece;
 
         // Operations
 

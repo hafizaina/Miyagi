@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+
 namespace HumanStorm.Miyagi.Framework
 {
     public class DrawableGameShape : BaseDrawableGamePiece
@@ -29,7 +30,9 @@ namespace HumanStorm.Miyagi.Framework
         /// The name of the shape that this object will draw on the screen.
         /// </summary>
         public String NameOfShape;
-
+        
+        // This objects allows us to render the shape files
+        ContentManager ContentManager;
                                                                                         #region ScalingMotionData
     /// <summary>
     /// X coordinate at center of normal container
@@ -74,12 +77,47 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableGameShape(string NameOfShape, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos):
-            base(colorOfGamePiece, sharedSprite, viewPort, widthOfGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+        public DrawableGameShape(string NameOfShape, Texture2D backgroundRectColor, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos):
+            base(backgroundRectColor, colorOfGamePiece, sharedSprite, viewPort, widthOfGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.NameOfShape = NameOfShape;
+            ContentManager = new ContentManager(base.Game.Services);
+            this.LoadContent();
         }
 
+        public void LoadContent()
+        {
+            this.TextureForShape = ContentManager.Load<Texture2D>(NameOfShape);
+        }
+
+        public override void Draw(GameTime time)
+        {
+            this.SharedSpriteBatch.Begin();
+            this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
+            this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
+            this.SharedSpriteBatch.Draw(TextureForShape, RectangleEnclosingThisObject, Color.Green);
+            this.SharedSpriteBatch.End();
+        }
+
+        public override void Update(GameTime time)
+        {
+            MouseState ms = Mouse.GetState();
+
+        }
+
+        public Vector2 SetPositionOfShape()
+        {
+            float xPos = this.RectangleEnclosingThisObject.X + (this.RectangleEnclosingThisObject.Width / 2) - TextureForShape.Width / 2;
+            float yPos = this.RectangleEnclosingThisObject.Y + (this.RectangleEnclosingThisObject.Height / 2) - TextureForShape.Height / 2;
+            return new Vector2(xPos, yPos);
+        }
+
+        //public void DrawNormalGameShape()
+        //{
+        //    this.SharedSpriteBatch.Begin();
+        //    this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
+        //    this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
+        //}
 
         public bool IsMouseOver(MouseState mouseState)
         {
@@ -93,11 +131,6 @@ namespace HumanStorm.Miyagi.Framework
                 return ((mouseState.X > GetPosition().X) && (mouseState.X < (GetPosition().X + GetWidth())) &&
                     (mouseState.Y > GetPosition().Y) && (mouseState.Y < (GetPosition().Y + GetHeight())));
             }
-        }
-
-        public void DrawBackgroundAndShape()
-        {
-            MouseState ms = Mouse.GetState();
         }
     } 
 }

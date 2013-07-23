@@ -1,8 +1,8 @@
 
-using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -59,10 +59,11 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         //Implementation Details:  Just declare this as a property and let the getter return.
         //(Rectangle)this.Game.Services.GetService(typeof(Rectangle));
+        public Game Game = new Game();
 
         public Rectangle ViewPort
         {
-            get { return (Rectangle)this.Game.Services.GetServices(typeof(Rectangle)); }
+            get { return (Rectangle)this.Game.Services.GetService(typeof(Rectangle)); }
         }
 
         /// <summary>
@@ -93,18 +94,21 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseDrawableGamePiece(Texture2D backgroundColor ,Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
+        public BaseDrawableGamePiece(Texture2D backgroundRectColor, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
             heightOfGamePiece, float xPos, float yPos, float zPos)
             : base
                 (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
-            this.ViewPort = viewPort;
-            this.backgroundRectangleColor = backgroundColor;
+            // this.ViewPort cannot be assigned to, it is read only
+            // this.ViewPort = viewPort;
+            this.backgroundRectangleColor = backgroundRectColor;
             this.ColorOfShape = colorOfGamePiece;
        
             this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y), this.Width, this.Height);
-           
-            this.SharedSpriteBatch = sharedSprite;
+
+            // Modified from this.SharedSpriteBatch = sharedSprite (passed within constructor)...
+            // See comment in property declaration
+            this.SharedSpriteBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
         }
 
         /// <summary>
@@ -204,7 +208,6 @@ namespace HumanStorm.Miyagi.Framework
             this.rectangleContainingThisObject.Width = widthOfThisBlock;
             this.rectangleContainingThisObject.Height = heightOfThisBlock;
         }
-
 
         /// <summary>
         /// Returns the current Position of the Mouse Cursor.
