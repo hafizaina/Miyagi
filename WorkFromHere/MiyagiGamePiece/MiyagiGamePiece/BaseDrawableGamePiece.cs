@@ -59,8 +59,11 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         //Implementation Details:  Just declare this as a property and let the getter return.
         //(Rectangle)this.Game.Services.GetService(typeof(Rectangle));
-        
-        public Rectangle ViewPort;
+
+        public Rectangle ViewPort
+        {
+            get { return (Rectangle)this.Game.Services.GetServices(typeof(Rectangle)); }
+        }
 
         /// <summary>
         ///The color of the shape, and the color of the math expression, to be drawn on the screen.
@@ -114,6 +117,12 @@ namespace HumanStorm.Miyagi.Framework
         /// <returns>
         /// </returns>
         public abstract void Draw(GameTime time);
+
+        private void DrawKeyCardBackGround()
+        {
+            MouseState ms = Mouse.GetState();
+            
+        }
         
 
         /// <summary>
@@ -224,5 +233,6 @@ namespace HumanStorm.Miyagi.Framework
         {
             return base.GetPosition();
         }
+
     } /* end class DrawableGamePiece */
 }
