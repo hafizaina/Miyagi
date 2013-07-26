@@ -1,23 +1,33 @@
-// FILE: C:/Users/ginga/Desktop//DrawableMiyagiKeyCard.cs
-
-using Microsoft.Xna.Framework;
 
 /// <summary>
  /// </summary>
 /// <summary>
     /// The client program should add an instance of this class to the list of game components.
      /// </summary>
-     ///
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 namespace HumanStorm.Miyagi.Framework
 {
-
     public class DrawableMiyagiKeyCard : DrawableGameComponent
     {
         // Attributes
 
-        public DrawableGamePiece ShapeGamePiece;
+        public DrawableGameShape ShapeGamePiece;
 
-        public DrawableGamePiece MathExpressionGamePiece;
+        public DrawableGameMathExpression MathExpressionGamePiece;
+
+        public DrawableGameMathExpression Math2;
+
+        SpriteBatch spriteBatch;
+        Texture2D backgroundRect;
 
         // Operations
 
@@ -34,11 +44,61 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public override void Update(GameTime time)
-        {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D0A begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D0A end
+        public void Update(GameTime time)
+        {   
 
+            int mouseX = Mouse.GetState().X;
+            int mouseY = Mouse.GetState().Y;
+            int mathBlockWidthBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().X+MathExpressionGamePiece.GetWidth();
+            int mathBlockHeightBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y + MathExpressionGamePiece.GetHeight();
+            int shapeBlockWidthBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetWidth();
+            int shapeBlockHeightBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetHeight();
+           
+            //If mouse is over one, set both to true.
+            //Mouse has to be between block's x and width, or
+            //between block's y and height.
+
+            if(((MathExpressionGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
+                && (mouseX <= mathBlockWidthBorder)))
+            {
+                MathExpressionGamePiece.IsSelected = true;
+                MathExpressionGamePiece.IsTargeted = true;
+               ShapeGamePiece.IsSelected = true;
+                ShapeGamePiece.IsTargeted = true;
+            }
+            else if (((MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
+                && (mouseY <= mathBlockHeightBorder)))
+            {
+                MathExpressionGamePiece.IsSelected = true;
+                MathExpressionGamePiece.IsTargeted = true;
+                  ShapeGamePiece.IsSelected = true;
+                ShapeGamePiece.IsTargeted = true;
+            }
+            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
+            && (mouseX <= shapeBlockWidthBorder)))
+            {
+                MathExpressionGamePiece.IsSelected = true;
+                MathExpressionGamePiece.IsTargeted = true;
+                  ShapeGamePiece.IsSelected = true;
+                ShapeGamePiece.IsTargeted = true;
+            }
+            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
+            && (mouseY <= shapeBlockHeightBorder)))
+            {
+                MathExpressionGamePiece.IsSelected = true;
+                MathExpressionGamePiece.IsTargeted = true;
+                  ShapeGamePiece.IsSelected = true;
+                ShapeGamePiece.IsTargeted = true;
+            }
+            else
+            {
+                MathExpressionGamePiece.IsSelected = false;
+                MathExpressionGamePiece.IsTargeted = false;
+                  ShapeGamePiece.IsSelected = false;
+                ShapeGamePiece.IsTargeted = false;
+            }
+            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, 
+                (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
         }
 
         /// <summary>
@@ -48,11 +108,9 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public override void Draw(GameTime time)
+        public void Draw(GameTime time)
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D0C begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D0C end
-
+            base.Draw(time);
         }
 
         /// <summary>
@@ -61,7 +119,11 @@ namespace HumanStorm.Miyagi.Framework
         /// Add this object, and the ShapeGamePiece and MathExpressionGamePiece to the collection of game componets.  
         /// </summary>
         /// <param name="game">
-        /// This should be name of the file that stores the image for this shape.
+        /// The game object from the client program.
+        /// 
+        /// Implementation details:
+        /// 
+        /// Hint, if the client program is a game, you would pass "this" for this argument. 
         /// </param>
         /// <param name="nameOfShape">
         /// A math expression that will be drawn adjacent to the shape on top of the image of this object.  For example, "-A".
@@ -85,12 +147,12 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableMiyagiKeyCard(Game game, string nameOfShape, string mathExpression, int widthOfThisKeyBlock, int heightOfThisKeyBlock, float xPos, float yPos, float zPos) 
-            : base(game)
+        public DrawableMiyagiKeyCard(Game game, string nameOfShape, string mathExpression, int widthOfThisKeyBlock, 
+            int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
+            :base(game)
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D13 begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D13 end
-
+            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            game.Components.Add(this);
         }
 
         /// <summary>
@@ -104,9 +166,44 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         protected override void LoadContent()
         {
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D29 begin
-            // section 10-0-0-8-5845b79f:13f0ba8d3fc:-8000:0000000000000D29 end
+            backgroundRect = Game.Content.Load<Texture2D>("MovingCircle");
 
+
+        }
+
+        /// <summary>
+        /// Sets the position of the top left corner of this key card.
+        /// </summary>
+        /// <param name="xPos">
+        /// </param>
+        /// <param name="yPos">
+        /// </param>
+        /// <param name="zPos">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public void SetPosition(float xPos, float yPos, float zPos)
+        {
+            ShapeGamePiece.SetPosition(xPos,yPos,zPos);
+        }
+
+        /// <summary>
+        /// Sets the size of this KeyCard.
+        /// 
+        /// Implementation details:
+        /// Remember that this class is built from two smaller visual components (the DrawableGameShape and the MathExpressionGamePiece).   So the height of the individual ShapeGamePiece and MathExpressionGamePiece should be half the height of the DrawableMiyagiKeyCard.
+        /// </summary>
+        /// <param name="widthOfThisBlock">
+        /// </param>
+        /// <param name="heightOfThisBlock">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
+        {
+            ShapeGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
+            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
+            MathExpressionGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
         }
     } /* end class DrawableMiyagiKeyCard */
 }
