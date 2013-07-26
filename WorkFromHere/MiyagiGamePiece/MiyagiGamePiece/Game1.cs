@@ -19,7 +19,10 @@ namespace HumanStorm.Miyagi.Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DrawableGameMathExpression test;
+        DrawableGameMathExpression test2;
+        DrawableMiyagiKeyCard testCard;
         Texture2D backgroundRectColor;
+        Game game;
 
 
         public Game1()
@@ -40,7 +43,11 @@ namespace HumanStorm.Miyagi.Framework
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Services.AddService(typeof(SpriteBatch), spriteBatch);
+            testCard = new DrawableMiyagiKeyCard(game, "tea", "a", 20,20,0,0,0);
+            SpriteFont Font = Content.Load<SpriteFont>("Spritey");
+            this.Components.Add(testCard);
             base.Initialize();
         }
 
@@ -51,7 +58,7 @@ namespace HumanStorm.Miyagi.Framework
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            
             backgroundRectColor = new Texture2D(GraphicsDevice, 1, 1);
             backgroundRectColor.SetData(new Color[] { Color.White });
             
@@ -92,14 +99,10 @@ namespace HumanStorm.Miyagi.Framework
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            SpriteFont Font = Content.Load<SpriteFont>("Spritey");
-            test = new DrawableGameMathExpression(backgroundRectColor,spriteBatch, Font, Color.Red, new Rectangle(75, 50, 200, 200), "A", 100, 100, 50, 40, 0);
-            
-            test.Draw(gameTime);
 
-            
-
+            spriteBatch.Begin();
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }
