@@ -100,7 +100,7 @@ namespace HumanStorm.Miyagi.Framework
                 (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             // this.ViewPort cannot be assigned to, it is read only
-            // this.ViewPort = viewPort;
+            //this.ViewPort = viewPort;
             this.backgroundRectangleColor = backgroundRectColor;
             this.ColorOfShape = colorOfGamePiece;
        
