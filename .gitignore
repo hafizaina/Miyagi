@@ -26,8 +26,8 @@ Properties/
 *.csproj
 
 # Specific files
-*/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Game1.cs
-*/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Program.cs
+/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Game1.cs
+/WorkFromHere/MiyagiGamePiece/MiyagiGamePiece/Program.cs
 
 
 [Oo]bj
