@@ -20,6 +20,7 @@ namespace HumanStorm.Miyagi.Framework
         SpriteBatch spriteBatch;
         DrawableGameShape test;
         Texture2D backgroundRectColor;
+        Game game;
 
 
         public Game1()
@@ -40,7 +41,8 @@ namespace HumanStorm.Miyagi.Framework
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Services.AddService(typeof(SpriteBatch), spriteBatch);
             base.Initialize();
         }
 
@@ -51,7 +53,7 @@ namespace HumanStorm.Miyagi.Framework
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            
             backgroundRectColor = new Texture2D(GraphicsDevice, 1, 1);
             backgroundRectColor.SetData(new Color[] { Color.White });
             
@@ -97,9 +99,9 @@ namespace HumanStorm.Miyagi.Framework
             
             test.Draw(gameTime);
 
-            
-
+            spriteBatch.Begin();
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }
