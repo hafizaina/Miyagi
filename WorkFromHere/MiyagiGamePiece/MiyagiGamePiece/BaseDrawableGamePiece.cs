@@ -65,7 +65,7 @@ namespace HumanStorm.Miyagi.Framework
         /// <summary>
         ///The color of the shape, and the color of the math expression, to be drawn on the screen.
         /// </summary>
-        public Color ColorOfShape;
+        public Color ColorOfShape;  
 
         /// <summary>
         /// Texture needed to color the background of the keyblock.
