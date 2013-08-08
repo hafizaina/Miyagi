@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyCardProject", "KeyCardProject\KeyCardProject\KeyCardProject.csproj", "{5AAC7931-2062-4319-A1AA-9B18C21472DE}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "KeyCardProjectContent", "KeyCardProject\KeyCardProjectContent\KeyCardProjectContent.contentproj", "{A62BAC5F-7BE5-446F-9191-9F57A2A61482}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsForKeyCardProject", "UnitTestsForKeyCardProject\UnitTestsForKeyCardProject.csproj", "{1C7C8B00-98D3-474A-BCD7-E328FA62B431}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5AAC7931-2062-4319-A1AA-9B18C21472DE}.Debug|x86.ActiveCfg = Debug|x86
+		{5AAC7931-2062-4319-A1AA-9B18C21472DE}.Debug|x86.Build.0 = Debug|x86
+		{5AAC7931-2062-4319-A1AA-9B18C21472DE}.Release|x86.ActiveCfg = Release|x86
+		{5AAC7931-2062-4319-A1AA-9B18C21472DE}.Release|x86.Build.0 = Release|x86
+		{A62BAC5F-7BE5-446F-9191-9F57A2A61482}.Debug|x86.ActiveCfg = Debug|x86
+		{A62BAC5F-7BE5-446F-9191-9F57A2A61482}.Release|x86.ActiveCfg = Release|x86
+		{1C7C8B00-98D3-474A-BCD7-E328FA62B431}.Debug|x86.ActiveCfg = Debug|x86
+		{1C7C8B00-98D3-474A-BCD7-E328FA62B431}.Debug|x86.Build.0 = Debug|x86
+		{1C7C8B00-98D3-474A-BCD7-E328FA62B431}.Release|x86.ActiveCfg = Release|x86
+		{1C7C8B00-98D3-474A-BCD7-E328FA62B431}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
