@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\bin\Debug\UnitTestsForKeyCardProject.exe" total="50" errors="24" failures="1" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2013-08-07" time="23:02:35">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5472" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\NUnitExecutables\bin" machine-name="GINGA-PC" user="ginga" user-domain="ginga-PC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\bin\Debug\UnitTestsForKeyCardProject.exe" executed="True" result="Failure" success="False" time="1.515" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="HumanStorm" executed="True" result="Failure" success="False" time="1.043" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Miyagi" executed="True" result="Failure" success="False" time="1.042" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Framework" executed="True" result="Failure" success="False" time="1.042" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="UnitTests" executed="True" result="Failure" success="False" time="1.041" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="DrawableGameMathExpressionTests" executed="True" result="Failure" success="False" time="0.969" asserts="0">
+                        <results>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorNotOverTopPartOfKeyCard" description="Verifies that when the mouse is NOT over either key-block, that the key-card is NOT enlarged." executed="True" result="Error" success="False" time="0.031" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorNotOverTopPartOfKeyCard() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 78
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorOverBottomHalfOfKeyCard" description="Verifies that when the mouse is over anywhere in the bottom half of the keyblock, that the key-card is enlarged." executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorOverBottomHalfOfKeyCard() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 72
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorOverTopHalfOfKeyCard" description="Verifies that when the mouse is over anywhere in the top half of the keyblock, that the key-card is enlarged." executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestInputDeviceCursorOverTopHalfOfKeyCard() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 66
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-suite type="ParameterizedTest" name="TestMathExpression" description="Tests whether input content is a valid math expression." executed="True" result="Failure" success="False" time="0.858" asserts="0">
+                            <results>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;--A&quot;)" executed="True" result="Error" success="False" time="0.501" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;A&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;---A&quot;)" executed="True" result="Error" success="False" time="0.007" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;A&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;a&quot;)" executed="True" result="Error" success="False" time="0.009" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;-A&quot;)" executed="True" result="Error" success="False" time="0.013" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;Z&quot;)" executed="True" result="Error" success="False" time="0.007" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;b&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;B&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;1&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;1&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;a&quot;)" executed="True" result="Error" success="False" time="0.010" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;h&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;b&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;z&quot;)" executed="True" result="Error" success="False" time="0.009" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;1&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                              <test-case name="HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(&quot;G&quot;)" executed="True" result="Error" success="False" time="0.008" asserts="0">
+                                <failure>
+                                  <message><![CDATA[System.InvalidOperationException : This property requires a graphics device service in the game service container.]]></message>
+                                  <stack-trace><![CDATA[at Microsoft.Xna.Framework.Game.get_GraphicsDevice()
+at HumanStorm.Miyagi.Framework.UnitTests.DrawableGameMathExpressionTests.TestMathExpression(String contentName) in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGameMathExpressionTests.cs:line 49
+]]></stack-trace>
+                                </failure>
+                              </test-case>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="TestFixture1" executed="True" result="Failure" success="False" time="0.049" asserts="0">
+                        <results>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestBaseDrawableGamePiece" description="Verify this works" executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestBaseDrawableGamePiece() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGamePieceTests.cs:line 18
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestGetPosition" description="Verify this works" executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestGetPosition() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGamePieceTests.cs:line 24
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestGetPositionWithRespectToViewPort" description="Verify this works" executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestGetPositionWithRespectToViewPort() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGamePieceTests.cs:line 30
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                          <test-case name="HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestSetPosition" description="Verify this works" executed="True" result="Error" success="False" time="0.002" asserts="0">
+                            <failure>
+                              <message><![CDATA[System.NotImplementedException : The method or operation is not implemented.]]></message>
+                              <stack-trace><![CDATA[at HumanStorm.Miyagi.Framework.UnitTests.TestFixture1.TestSetPosition() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\DrawableGamePieceTests.cs:line 36
+]]></stack-trace>
+                            </failure>
+                          </test-case>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Namespace" name="NUnitTest1" executed="True" result="Success" success="True" time="0.360" asserts="0">
+        <results>
+          <test-suite type="TestFixture" name="BaseGamePieceTests" executed="True" result="Success" success="True" time="0.359" asserts="0">
+            <results>
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestHeightGetter" description="Tests if getter returns actual height." executed="True" result="Success" success="True" time="0.111" asserts="1" />
+              <test-suite type="ParameterizedTest" name="TestMathExpression" description="Tests whether input content is a valid math expression." executed="True" result="Success" success="True" time="0.197" asserts="0">
+                <results>
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;-?&quot;,&quot;--A&quot;)" executed="True" result="Success" success="True" time="0.100" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;-?&quot;,&quot;---A&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;A&quot;)" executed="True" result="Success" success="True" time="0.011" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;1&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;1&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;-?&quot;,&quot;-A&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;a&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;Z&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;b&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[A-Z]&quot;,&quot;B&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;b&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;a&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;h&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;1&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;-?&quot;,&quot;A&quot;)" executed="True" result="Success" success="True" time="0.001" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;z&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                  <test-case name="NUnitTest1.BaseGamePieceTests.TestMathExpression(&quot;[a-z]&quot;,&quot;G&quot;)" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                </results>
+              </test-suite>
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestSetPosition" description="Tests if position is set correctly." executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestSetSize" description="Tests if size sets correctly." executed="True" result="Success" success="True" time="0.001" asserts="2" />
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestSetSize2" description="Tests exception throw when width and height are negative numbers." executed="True" result="Success" success="True" time="0.003" asserts="1" />
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestSetSize3" description="Tests exception throw when height is a negative number." executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestSetSize4" description="Tests exception throw when width is a negative number." executed="True" result="Success" success="True" time="0.001" asserts="1" />
+              <test-case name="NUnitTest1.BaseGamePieceTests.TestWidthGetter" description="Tests if getter returns actual width." executed="True" result="Success" success="True" time="0.001" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="Namespace" name="UnitTestsForKeyCardProject" executed="True" result="Failure" success="False" time="0.024" asserts="0">
+        <results>
+          <test-suite type="TestFixture" name="TestFixture1" executed="True" result="Failure" success="False" time="0.021" asserts="0">
+            <results>
+              <test-case name="UnitTestsForKeyCardProject.TestFixture1.TestFault" executed="True" result="Failure" success="False" time="0.005" asserts="1">
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at UnitTestsForKeyCardProject.TestFixture1.TestFault() in C:\Users\ginga\Github\DelanteMiyagi\Miyagi\UnitTestsForKeyCardProject\TestFixture.cs:line 22
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case name="UnitTestsForKeyCardProject.TestFixture1.TestTrue" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
