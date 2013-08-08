@@ -1,8 +1,8 @@
 # Directories #
 ###############
-bin/
-obj/
-Properties/
+bin/*
+obj/*
+Properties/*
 
 # Files #
 #########

@@ -33,6 +33,7 @@ namespace HumanStorm.Miyagi.Framework
         
         // This objects allows us to render the shape files
         ContentManager ContentManager;
+        public Game game = new Microsoft.Xna.Framework.Game();
                                                                                         #region ScalingMotionData
     /// <summary>
     /// X coordinate at center of normal container
@@ -81,7 +82,7 @@ namespace HumanStorm.Miyagi.Framework
             base(backgroundRectColor, colorOfGamePiece, sharedSprite, viewPort, widthOfGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.NameOfShape = NameOfShape;
-            ContentManager = new ContentManager(base.Game.Services);
+            ContentManager = new ContentManager(game.Services);
             this.LoadContent();
         }
 
