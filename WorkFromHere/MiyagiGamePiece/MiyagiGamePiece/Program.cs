@@ -1,6 +1,6 @@
 using System;
 
-namespace MiyagiGamePiece
+namespace HumanStorm.Miyagi.Framework
 {
 #if WINDOWS || XBOX
     static class Program

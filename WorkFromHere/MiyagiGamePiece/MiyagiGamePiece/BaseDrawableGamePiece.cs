@@ -1,5 +1,4 @@
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +41,7 @@ namespace HumanStorm.Miyagi.Framework
         //this.RectangleEnclosingThisImage just 
         //returns a new rectangle whose values are taken from 
         //the width, height, and position of this variable.
-        
+
         private Rectangle rectangleContainingThisObject;
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace HumanStorm.Miyagi.Framework
         //Implementation Details:  The constructor should initialize this variable as 
         //this.SharedSpriteBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
         //This comes from http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.game.services.aspx.
-        
+
         public SpriteBatch SharedSpriteBatch;
 
         /// <summary>
@@ -59,13 +58,13 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         //Implementation Details:  Just declare this as a property and let the getter return.
         //(Rectangle)this.Game.Services.GetService(typeof(Rectangle));
-        
+
         public Rectangle ViewPort;
 
         /// <summary>
         ///The color of the shape, and the color of the math expression, to be drawn on the screen.
         /// </summary>
-        public Color ColorOfShape;  
+        public Color ColorOfShape;
 
         /// <summary>
         /// Texture needed to color the background of the keyblock.
@@ -90,7 +89,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseDrawableGamePiece(Texture2D backgroundColor ,Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
+        public BaseDrawableGamePiece(Texture2D backgroundColor, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
             heightOfGamePiece, float xPos, float yPos, float zPos)
             : base
                 (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
@@ -98,9 +97,9 @@ namespace HumanStorm.Miyagi.Framework
             this.ViewPort = viewPort;
             this.backgroundRectangleColor = backgroundColor;
             this.ColorOfShape = colorOfGamePiece;
-       
-            this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y), this.Width, this.Height);
-           
+
+            this.rectangleContainingThisObject = new Rectangle(((int)xPos + this.ViewPort.X), ((int)yPos + this.ViewPort.Y), this.Width, this.Height);
+
             this.SharedSpriteBatch = sharedSprite;
         }
 
@@ -114,13 +113,13 @@ namespace HumanStorm.Miyagi.Framework
         /// yPos - The y-position of the left corner of the key-block.
         /// </summary>
         // Implementation details:  Draw the way you normally would draw in XNA but for the SpriteBatch, use this.SharedSpriteBatch.
-        
+
         /// <param name="time">
         /// </param>
         /// <returns>
         /// </returns>
         public abstract void Draw(GameTime time);
-        
+
 
         /// <summary>
         /// Checks to determine if the input device is currently hovering over the image that this object displays.  This also updates 
@@ -165,15 +164,15 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public override void SetPosition(float xPos, float yPos, float zPos=0f)
-        {   
+        public override void SetPosition(float xPos, float yPos, float zPos = 0f)
+        {
             //Position with respect to the ViewPort's top-left corner.
-            this.rectangleContainingThisObject.X = ((int)xPos+this.ViewPort.X);
-            this.rectangleContainingThisObject.Y = ((int)yPos+this.ViewPort.Y);
-            
+            this.rectangleContainingThisObject.X = ((int)xPos + this.ViewPort.X);
+            this.rectangleContainingThisObject.Y = ((int)yPos + this.ViewPort.Y);
+
             //Position with respect to the graphicsDisplayDevice.
             base.SetPosition(xPos, yPos, zPos);
-            
+
         }
 
         /// <summary>

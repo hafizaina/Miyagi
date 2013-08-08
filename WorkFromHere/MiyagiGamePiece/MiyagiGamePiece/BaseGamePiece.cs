@@ -3,6 +3,9 @@
     /// This is the base class for creating a node that draws a key-block on the screen.  The idea is that this base class should be framework-independent.  To draw this KeyBlock on the the screen for a specific framework, just create a class(es) that is derived from this class and add the details needed for that specific framework.
      /// </summary>
      /// 
+using Microsoft.Xna.Framework.Input;
+
+
 namespace HumanStorm.Miyagi.Framework
 {
 
@@ -125,6 +128,7 @@ namespace HumanStorm.Miyagi.Framework
             this.Height = heightOfThisBlock;
 
         }
+
 
         /// <summary>
         /// Returns the Width of this object.  If IsTargeted is set to true, then
