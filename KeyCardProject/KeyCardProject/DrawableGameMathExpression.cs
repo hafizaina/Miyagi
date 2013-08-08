@@ -20,8 +20,15 @@ namespace HumanStorm.Miyagi.Framework
 
         public SpriteFont Font;
         public String MathExpression;
-        public Vector2 aligned;
-
+        public Vector2 alignedMathExpression;
+        public int mouseX;
+        public int mouseY;
+        public Rectangle scaledRectangle;
+        public float xCenter;
+        public float yCenter;
+        public float xScaledPosition;
+        public float yScaledPosition;
+        private Vector2 ScaleMotion;
         // Operations
 
         /// <summary>
@@ -57,14 +64,18 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableGameMathExpression(Texture2D backgroundRectColor,SpriteBatch sharedSprite, SpriteFont spriteFont, Color colorOfExpression, Rectangle viewPort, String mathExpression, int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
-            : base(backgroundRectColor,colorOfExpression, sharedSprite, viewPort, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+        public DrawableGameMathExpression(Texture2D backgroundRectColor,SpriteBatch sharedSprite, SpriteFont spriteFont, 
+            Color colorOfExpression, Rectangle viewPort, String mathExpression, int widthOfThisGamePiece, int heightOfGamePiece, 
+            float xPos, float yPos, float zPos): base(backgroundRectColor,colorOfExpression, sharedSprite, 
+            viewPort, widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
 
             String regularExpressionPattern = @"^-?(?i)[A-Z]\z";
-
+      
             this.Font = spriteFont;
 
+          
+            
             if ((System.Text.RegularExpressions.Regex.IsMatch(mathExpression, regularExpressionPattern) == true))
             {
                 this.MathExpression = mathExpression;
@@ -79,19 +90,27 @@ namespace HumanStorm.Miyagi.Framework
 
         public override void Draw(GameTime time)
         {
-            this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
+            Vector2 origin = new Vector2(this.RectangleEnclosingThisObject.Width, this.RectangleEnclosingThisObject.Height);
+            
             this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
+            
             this.SetMathExpressionPositionAndScale();
-            this.SharedSpriteBatch.DrawString(this.Font, this.MathExpression, aligned, Color.Blue, 0.0f, new Vector2(0, 0), 1.0f, new SpriteEffects(), 0.0f);
-            this.SharedSpriteBatch.End();
+            
+            this.SharedSpriteBatch.DrawString(this.Font, this.MathExpression, alignedMathExpression, Color.Blue, 0.0f, 
+                new Vector2(0, 0), 1.0f, new SpriteEffects(), 0.0f);
         }
+
+
         public void SetMathExpressionPositionAndScale()
         {
             Vector2 letterSize = Font.MeasureString(this.MathExpression);
+            
             float xPos = this.RectangleEnclosingThisObject.X + (this.RectangleEnclosingThisObject.Width/2) - (letterSize.X/2);
+            
             float yPos = this.RectangleEnclosingThisObject.Y + (this.RectangleEnclosingThisObject.Height/2) - (letterSize.Y/2);
-            aligned = new Vector2(xPos, yPos);
+
+
+            alignedMathExpression = new Vector2(xPos, yPos);
             //This method is supposed to set two things.
             //1. A Vector3 that will store the pin-point position of the absolute center of the rectangle the letter displays on.
             //2. A float that will give and expand the letter by the scale factor of the rectangle. It has to be 90% of the rectangle,
@@ -101,6 +120,33 @@ namespace HumanStorm.Miyagi.Framework
 
         public override void Update(GameTime time)
         {
+            int mouseX = Mouse.GetState().X;
+            int mouseY = Mouse.GetState().Y;
+            
+            #region SCALE_MOTION_LOGISTICS
+            xCenter = this.RectangleEnclosingThisObject.X + (.5f * (float)this.RectangleEnclosingThisObject.Width);
+            yCenter = this.RectangleEnclosingThisObject.Y + (.5f * (float)this.RectangleEnclosingThisObject.Height);
+
+            xScaledPosition = xCenter - (.5f * (this.RectangleEnclosingThisObject.Width*1.2f));
+            yScaledPosition = yCenter - (.5f * (this.RectangleEnclosingThisObject.Height*1.2f));
+
+            ScaleMotion = new Vector2(xScaledPosition, yScaledPosition);
+
+            #endregion SCALED_MOTION_LOGISTICS
+
+            if (this.RectangleEnclosingThisObject.Contains(mouseX,mouseY))
+            {
+                //if the mouse hovers over the object, draw the scaled rectangle on the screen.
+                this.IsSelected = true;
+                this.IsTargeted = true;
+
+            }
+            else
+            {
+                //But if not, draw the original rectangle on the screen.
+                this.IsSelected = false;
+                this.IsTargeted = false;
+            }
         }
     }
 }

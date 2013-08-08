@@ -41,9 +41,6 @@ namespace HumanStorm.Miyagi.Framework
 
         // Associations
 
-        /// <summary> 
-        /// </summary>
-       //public ArrayList assignedPoint;
 
         // Operations
 
@@ -127,23 +124,44 @@ namespace HumanStorm.Miyagi.Framework
         }
 
         /// <summary>
-        /// Returns the Width of this object.  If IsTargeted is set to true, then
+        /// Returns the Width of this object.  If IsTargeted is set to true, then the returned width should be multiplied by the SCALE_FACTOR.
         /// </summary>
         /// <returns>
         /// </returns>
         public int GetWidth()
         {
-            return this.Width;
+            float widthOfBlock;
+            if (this.IsTargeted == true)
+            {
+               widthOfBlock = this.Width * SCALE_FACTOR;
+            }
+            else
+            {
+
+               widthOfBlock = this.Width;
+            }
+            return (int)widthOfBlock;
         }
 
         /// <summary>
-        /// Returns the height of the image to be drawn that represents that this object represents.  If IsTargeted is true, then the width is scaled by the SCALE_FACTOR.
+        /// Returns the height of the image to be drawn that represents that this object represents.  If IsTargeted is true, 
+        /// then the height is scaled by the SCALE_FACTOR.
         /// </summary>
         /// <returns>
         /// </returns>
         public int GetHeight()
         {
-            return this.Height;
+            float heightOfBlock;
+            if (this.IsTargeted == true)
+            {   
+
+              heightOfBlock =  this.Height*SCALE_FACTOR;
+            }
+            else
+            {
+                heightOfBlock = this.Height;
+            }
+            return (int)heightOfBlock;
         }
 
         /// <summary>

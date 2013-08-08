@@ -20,15 +20,18 @@ namespace HumanStorm.Miyagi.Framework
     {
         // Attributes
 
-        public DrawableGameShape ShapeGamePiece;
+     //   public DrawableGameShape ShapeGamePiece;
 
         public DrawableGameMathExpression MathExpressionGamePiece;
 
         public DrawableGameMathExpression Math2;
-
+        bool dragging=false;
         SpriteBatch spriteBatch;
         Texture2D backgroundRect;
-
+        SpriteFont spritefont;
+        private MouseState PrevMouseState;
+        int xDisplacement;
+        int yDisplacement;
         // Operations
 
         /// <summary>
@@ -44,63 +47,68 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void Update(GameTime time)
-        {   
+        public override void Update(GameTime time)
+        {
+            MathExpressionGamePiece.Update(time);
+            Math2.Update(time);
 
-            int mouseX = Mouse.GetState().X;
-            int mouseY = Mouse.GetState().Y;
-            int mathBlockWidthBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().X+MathExpressionGamePiece.GetWidth();
-            int mathBlockHeightBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y + MathExpressionGamePiece.GetHeight();
-            int shapeBlockWidthBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetWidth();
-            int shapeBlockHeightBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetHeight();
-           
-            //If mouse is over one, set both to true.
-            //Mouse has to be between block's x and width, or
-            //between block's y and height.
-
-            if(((MathExpressionGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
-                && (mouseX <= mathBlockWidthBorder)))
+            #region DRAG
+            if (dragging == false)
             {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-               ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
-            }
-            else if (((MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
-                && (mouseY <= mathBlockHeightBorder)))
-            {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
-            }
-            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
-            && (mouseX <= shapeBlockWidthBorder)))
-            {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
-            }
-            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
-            && (mouseY <= shapeBlockHeightBorder)))
-            {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                {
+                    if (Math2.RectangleEnclosingThisObject.Contains(Mouse.GetState().X,Mouse.GetState().Y)
+                        ||MathExpressionGamePiece.RectangleEnclosingThisObject.Contains(Mouse.GetState().X,Mouse.GetState().Y))
+                    {
+                        dragging = true;
+                        // On initial click on object, record the mouse state
+                        MouseState currentMouseState = Mouse.GetState();
+                        PrevMouseState = currentMouseState;
+                    }
+                }
             }
             else
             {
-                MathExpressionGamePiece.IsSelected = false;
-                MathExpressionGamePiece.IsTargeted = false;
-                  ShapeGamePiece.IsSelected = false;
-                ShapeGamePiece.IsTargeted = false;
-            }
-            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, 
-                (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
-        }
+                // If dragging is true, keep updating currentMouseState
+                MouseState currentMouseState = Mouse.GetState();
+                // If mouse position has moved, move keycard object by its displacement
+                if (PrevMouseState.X != currentMouseState.X || PrevMouseState.Y != currentMouseState.Y)
+                {
+                    xDisplacement = currentMouseState.X - PrevMouseState.X;
+                    yDisplacement = currentMouseState.Y - PrevMouseState.Y;
+                }
+                float xPos = Math2.GetPosition().X + xDisplacement;
+                float yPos = Math2.GetPosition().Y + yDisplacement;
+                Math2.SetPosition(xPos, yPos, 0f);
 
+                if (Mouse.GetState().LeftButton == ButtonState.Released)
+                {
+                    dragging = false;
+                }
+
+                // Update placement variables (reset displacement back to 0)
+                PrevMouseState = currentMouseState;
+                xDisplacement = 0;
+                yDisplacement = 0;
+            }
+            #endregion DRAG
+
+
+            if (MathExpressionGamePiece.IsTargeted == true)
+            {
+                Math2.IsTargeted = true;
+            }
+            else if (Math2.IsTargeted == true)
+            {
+                MathExpressionGamePiece.IsTargeted = true;
+            }
+
+            MathExpressionGamePiece.SetPosition(Math2.GetPosition().X, 
+                (Math2.GetPosition().Y + Math2.GetHeight()), 0);
+
+            base.Update(time);
+        }
+     
         /// <summary>
         /// No need to call this method.  
         /// </summary>
@@ -108,9 +116,12 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public void Draw(GameTime time)
+        public override void Draw(GameTime time)
         {
+            MathExpressionGamePiece.Draw(time);
+            Math2.Draw(time);
             base.Draw(time);
+
         }
 
         /// <summary>
@@ -151,7 +162,12 @@ namespace HumanStorm.Miyagi.Framework
             int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
             :base(game)
         {
-            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+            spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
+            spritefont = (SpriteFont)game.Services.GetService(typeof(SpriteFont));
+            MathExpressionGamePiece = new DrawableGameMathExpression(backgroundRect, spriteBatch, spritefont, Color.Red,
+                 new Rectangle(20, 20, 505, 500), nameOfShape, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
+            Math2 = new DrawableGameMathExpression(backgroundRect, spriteBatch, spritefont, Color.Red,
+                 new Rectangle(20, 20, 505, 500), mathExpression, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
             game.Components.Add(this);
         }
 
@@ -166,7 +182,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         protected override void LoadContent()
         {
-            backgroundRect = Game.Content.Load<Texture2D>("MovingCircle");
+            backgroundRect = Game.Content.Load<Texture2D>("DrawableGameMathExpression");
 
 
         }
@@ -184,7 +200,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void SetPosition(float xPos, float yPos, float zPos)
         {
-            ShapeGamePiece.SetPosition(xPos,yPos,zPos);
+            Math2.SetPosition(xPos,yPos,zPos);
         }
 
         /// <summary>
@@ -201,8 +217,8 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
-            ShapeGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
-            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
+            Math2.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
+            MathExpressionGamePiece.SetPosition(Math2.GetPosition().X, (Math2.GetPosition().Y + Math2.GetHeight()), 0);
             MathExpressionGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
         }
     } /* end class DrawableMiyagiKeyCard */
