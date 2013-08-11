@@ -28,11 +28,13 @@ namespace HumanStorm.Miyagi.Framework
         /// The name of the shape that this object will draw on the screen.
         /// </summary>
         public String NameOfShape;
+
+        /// <summary>
+        /// Determines if KeyCard is being dragged
+        /// </summary>
+        bool dragging = false;
         
-        // This objects allows us to render the shape files
-        ContentManager ContentManager;
-        public Game game = new Microsoft.Xna.Framework.Game();
-                                                                                        #region ScalingMotionData
+#region ScalingMotionData
     /// <summary>
     /// X coordinate at center of normal container
     /// </summary>
@@ -54,6 +56,12 @@ namespace HumanStorm.Miyagi.Framework
     /// </summary>
     private float yScaledPosition;
 #endregion ScalingMotionData
+
+#region Dragging
+    private MouseState PrevMouseState;
+    int xDisplacement;
+    int yDisplacement;
+#endregion Dragging
 
         // Operations
 
@@ -80,34 +88,45 @@ namespace HumanStorm.Miyagi.Framework
             base(backgroundRectColor, colorOfGamePiece, sharedSprite, viewPort, widthOfGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.NameOfShape = NameOfShape;
-            ContentManager = new ContentManager(game.Services);
-            this.LoadContent();
+            this.PrevMouseState = Mouse.GetState();
         }
 
-        public void LoadContent()
+        public void LoadContent(ContentManager content)
         {
-            this.TextureForShape = ContentManager.Load<Texture2D>(NameOfShape);
+            this.TextureForShape = content.Load<Texture2D>(NameOfShape);
         }
 
         public override void Draw(GameTime time)
         {
             this.SharedSpriteBatch.Begin();
             this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
-            this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
-            this.SharedSpriteBatch.Draw(TextureForShape, RectangleEnclosingThisObject, Color.Green);
+            //this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
+            this.SharedSpriteBatch.Draw(TextureForShape, RectangleEnclosingThisObject, base.ColorOfShape);
             this.SharedSpriteBatch.End();
         }
 
         public override void Update(GameTime time)
         {
             MouseState ms = Mouse.GetState();
+            if (IsMouseOver(ms))
+            {
+                this.SetColor(Color.Red);
+            }
+            else if (!(IsMouseOver(ms)))
+            {
+                this.SetColor(Color.Blue);
+            }
+        }
 
+        public void SetColor(Color color)
+        {
+            base.ColorOfShape = color;
         }
 
         public Vector2 SetPositionOfShape()
         {
-            float xPos = this.RectangleEnclosingThisObject.X + (this.RectangleEnclosingThisObject.Width / 2) - TextureForShape.Width / 2;
-            float yPos = this.RectangleEnclosingThisObject.Y + (this.RectangleEnclosingThisObject.Height / 2) - TextureForShape.Height / 2;
+            float xPos = base.ViewPort.X + (base.ViewPort.Width / 2) - base.GetWidth() / 2;
+            float yPos = base.ViewPort.Y + (base.ViewPort.Height / 2) - base.GetHeight() / 2;
             return new Vector2(xPos, yPos);
         }
 
@@ -120,6 +139,16 @@ namespace HumanStorm.Miyagi.Framework
 
         public bool IsMouseOver(MouseState mouseState)
         {
+            //if (IsSelected)
+            //{
+            //    return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + GetWidth() * SCALE_FACTOR)) &&
+            //        (mouseState.Y > yScaledPosition) && (mouseState.Y < (yScaledPosition + GetHeight() * SCALE_FACTOR)));
+            //}
+            //else
+            //{
+            //    return ((mouseState.X > GetPosition().X) && (mouseState.X < (GetPosition().X + GetWidth())) &&
+            //        (mouseState.Y > GetPosition().Y) && (mouseState.Y < (GetPosition().Y + GetHeight())));
+            //}
             if (IsSelected)
             {
                 return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + GetWidth() * SCALE_FACTOR)) &&
@@ -127,8 +156,8 @@ namespace HumanStorm.Miyagi.Framework
             }
             else
             {
-                return ((mouseState.X > GetPosition().X) && (mouseState.X < (GetPosition().X + GetWidth())) &&
-                    (mouseState.Y > GetPosition().Y) && (mouseState.Y < (GetPosition().Y + GetHeight())));
+                return ((mouseState.X > GetPosition().X) && (mouseState.X < (ViewPort.X + ViewPort.Width)) &&
+                    (mouseState.Y > GetPosition().Y) && (mouseState.Y < (ViewPort.Y + ViewPort.Height)));
             }
         }
     } 

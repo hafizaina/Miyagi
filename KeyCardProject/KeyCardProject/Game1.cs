@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace KeyCardProject
+namespace HumanStorm.Miyagi.Framework
 {
     /// <summary>
     /// This is the main type for your game
@@ -18,6 +18,10 @@ namespace KeyCardProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        DrawableGameShape test;
+        Texture2D backgroundRectColor;
+        Game game;
+
 
         public Game1()
         {
@@ -34,8 +38,11 @@ namespace KeyCardProject
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-           
+            //spriteBatch = new SpriteBatch(GraphicsDevice);
+            //this.Services.AddService(typeof(SpriteBatch), spriteBatch);
             base.Initialize();
+            base.IsMouseVisible = true;
+
         }
 
         /// <summary>
@@ -44,9 +51,13 @@ namespace KeyCardProject
         /// </summary>
         protected override void LoadContent()
         {
-            
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Services.AddService(typeof(SpriteBatch), spriteBatch);
+            backgroundRectColor = new Texture2D(GraphicsDevice, 1, 1);
+            backgroundRectColor.SetData(new Color[] { Color.White });
+            test = new DrawableGameShape("square", backgroundRectColor, Color.Blue, spriteBatch, new Rectangle(0, 0, 50, 50), 50, 50, 200, 300, 0);
+            test.LoadContent(this.Content);            
 
             // TODO: use this.Content to load your game content here
         }
@@ -72,21 +83,24 @@ namespace KeyCardProject
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            test.Update(gameTime);
             base.Update(gameTime);
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
+
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            //SpriteFont Font = Content.Load<SpriteFont>("Spritey"); 
+            test.Draw(gameTime);
 
-            // TODO: Add your drawing code here
-
+            spriteBatch.Begin();
             base.Draw(gameTime);
+            spriteBatch.End();
         }
     }
 }

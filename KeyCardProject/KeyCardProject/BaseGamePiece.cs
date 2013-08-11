@@ -102,7 +102,6 @@ namespace HumanStorm.Miyagi.Framework
         public virtual void SetPosition(float xPos, float yPos, float zPos)
         {
             this.Position = new MPoint3D(xPos, yPos, zPos);
-
         }
 
         /// <summary>
@@ -156,7 +155,6 @@ namespace HumanStorm.Miyagi.Framework
         public virtual MPoint3D GetPosition()
         {
             return this.Position;
-
         }
 
 
