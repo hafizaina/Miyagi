@@ -91,7 +91,11 @@ namespace HumanStorm.Miyagi.Framework
             this.ViewPort = viewPort;
             this.backgroundRectangle = backgroundRect;
             this.ColorOfShape = colorOfGamePiece;
-            this.rectangleContainingThisObject = new Rectangle(((int)xPos), ((int)yPos), this.Width, this.Height);
+
+
+            this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y),
+                this.Width, this.Height);
+
             this.SharedSpriteBatch = sharedSprite;
         }
 
@@ -158,9 +162,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public override void SetPosition(float xPos, float yPos, float zPos = 0f)
         {
+       
+
             this.rectangleContainingThisObject.X = (int)xPos;
             this.rectangleContainingThisObject.Y = (int)yPos;
-
             //Position with respect to the graphicsDisplayDevice.
             base.SetPosition(xPos, yPos, zPos);
 
@@ -205,7 +210,8 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public Vector3 GetPositionWithRespectToViewPort()
         {
-            return new Vector3(this.rectangleContainingThisObject.X, this.rectangleContainingThisObject.Y, 0);
+            return new Vector3(this.rectangleContainingThisObject.X -this.ViewPort.X,
+                this.rectangleContainingThisObject.Y-this.ViewPort.Y, 0);
 
         }
 
@@ -218,7 +224,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public override MPoint3D GetPosition()
         {
-            return base.GetPosition();
+            return new MPoint3D(this.rectangleContainingThisObject.X, 
+                this.rectangleContainingThisObject.Y, 
+                0);
+
         }
     } /* end class DrawableGamePiece */
 }

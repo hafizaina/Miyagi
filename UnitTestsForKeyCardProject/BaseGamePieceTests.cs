@@ -1,126 +1,104 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using HumanStorm.Miyagi.Framework;
-using System.Text.RegularExpressions;
 
-namespace NUnitTest1
+namespace HumanStorm.Miyagi.Framework.UnitTests
 {
     [TestFixture]
     public class BaseGamePieceTests
     {
         [Test]
+        [TestCase(20, false, 1.2f, Result = 20)]
+        [TestCase(40, false, 1.2f, Result = 40)]
+        [TestCase(1, true, 1.2f, Result = 1)]
+        [TestCase(6, true, 1.2f, Result = 7)]
+        [TestCase(7, false, 1.2f, Result = 7)]
+        [TestCase(145, false, 1.2f, Result = 145)]
+        [TestCase(152, true, 1.2f, Result = 182)]
+        [TestCase(541, false, 1.2f, Result = 541)]
         [Description("Tests if getter returns actual width.")]
-        public void TestWidthGetter()
+        public int TestWidthGetter(int width, bool isTargeted, float scaleFactor)
         {
-            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            Assert.IsTrue(TestCard.GetWidth() == 20);
-
+            BaseGamePiece TestCard = new BaseGamePiece(width, 20, 0, 0, 0);
+            TestCard.IsTargeted = isTargeted;
+            TestCard.SCALE_FACTOR = scaleFactor;
+            return TestCard.GetWidth();
         }
 
         [Test]
+        [TestCase(20, false, 1.2f, Result = 20)]
+        [TestCase(40, false, 1.2f, Result = 40)]
+        [TestCase(1, true, 1.2f, Result = 1)]
+        [TestCase(6, true, 1.2f, Result = 7)]
+        [TestCase(7, false, 1.2f, Result = 7)]
+        [TestCase(145, false, 1.2f, Result = 145)]
+        [TestCase(152, true, 1.2f, Result = 182)]
+        [TestCase(541, false, 1.2f, Result = 541)]
         [Description("Tests if getter returns actual height.")]
-        public void TestHeightGetter()
+        public int TestHeightGetter(int height, bool isTargeted, float scaleFactor)
         {
-            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            Assert.IsTrue(TestCard.GetHeight() == 20);
-
+            BaseGamePiece TestCard = new BaseGamePiece(20, height, 0, 0, 0);
+            TestCard.IsTargeted = isTargeted;
+            TestCard.SCALE_FACTOR = scaleFactor;
+            return TestCard.GetHeight();
         }
 
 
 
         [Test]
+        [TestCase(40, 40, false, 1.2f, 40, 40)]
+        [TestCase(450, 340, true, 1.2f, 540, 408)]
+        [TestCase(450, 420, false, 1.2f, 450, 420)]
+        [TestCase(410, 140, true, 1.2f, 492, 168)]
+        [TestCase(401, 4560, false, 1.2f, 401, 4560)]
+        [TestCase(410, 450, true, 1.2f, 492, 540)]
+        [TestCase(4140, 4310, false, 1.2f, 4140, 4310)]
         [Description("Tests if size sets correctly.")]
-        public void TestSetSize()
+        public void TestValidSetSize(int widthToSet, int heightToSet, bool isTargeted,
+            float scaleFactor, int newWidth, int newHeight)
         {
-            BaseGamePiece TestCard = new BaseGamePiece( 20, 20, 0, 0, 0);
-            TestCard.SetSize(10, 10);
-            Assert.IsTrue(TestCard.GetHeight() == 10);
-            Assert.IsTrue(TestCard.GetWidth() == 10);
-
+            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
+            TestCard.SetSize(widthToSet, heightToSet);
+            TestCard.IsTargeted = isTargeted;
+            TestCard.SCALE_FACTOR = scaleFactor;
+            Assert.AreEqual(TestCard.GetHeight(), newHeight);
+            Assert.AreEqual(TestCard.GetWidth(), newWidth);
         }
 
         [Test]
         [Description("Tests exception throw when width and height are negative numbers.")]
-        public void TestSetSize2()
+        [TestCase(-4140, -4310)]
+        [TestCase(-4140, 0)]
+        [TestCase(0, -4310)]
+        [TestCase(-4140, 1)]
+        [TestCase(40, -4310)]
+        [TestCase(0, 0)]
+        [TestCase(0, 01)]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void TestInvalidSetSizes(int invalidWidth, int invalidHeight)
         {
             BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            Assert.Throws<ArgumentException>(delegate { TestCard.SetSize(-10, -10); });
-
+            TestCard.SetSize(invalidWidth, invalidHeight);
         }
 
         [Test]
-        [Description("Tests exception throw when height is a negative number.")]
-        public void TestSetSize3()
+        [TestCase(0, 0, 0)]
+        [TestCase(10, 20, 430)]
+        [TestCase(10, 10, 10)]
+        [TestCase(-20, 80, -90)]
+        [TestCase(10, -20, 0)]
+        [TestCase(-10, -50, 0)]
+        [Description("Tests if position is set and is returned by its getter correctly.")]
+        public void TestGetAndSetPosition(int xPos, int yPos, int zPos)
         {
             BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            Assert.Throws<ArgumentException>(delegate { TestCard.SetSize(10, -10); });
-
+            TestCard.SetPosition(xPos, yPos, zPos);
+            MPoint3D NewPosition = TestCard.GetPosition();
+            Assert.AreEqual(NewPosition.X, xPos);
+            Assert.AreEqual(NewPosition.Y, yPos);
+            Assert.AreEqual(NewPosition.Z, zPos);
         }
 
-        [Test]
-        [Description("Tests exception throw when width is a negative number.")]
-        public void TestSetSize4()
-        {
-            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            Assert.Throws<ArgumentException>(delegate { TestCard.SetSize(-10, 10); });
-
-        }
-
-
-        [Test]
-        [Description("Tests if position is set correctly.")]
-        public void TestSetPosition()
-        {
-            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            TestCard.SetPosition(19, 13, 22);
-            MPoint3D NewPosition = new MPoint3D(19, 13, 22);
-            Assert.IsTrue(TestCard.GetPosition().Equals(NewPosition));
-        }
-
-        [Test]
-        [Description("Tests whether input content is a valid math expression.")]
-        // THESE TESTS ARE FOR IMPLEMENTATION FOR DRAWABLEGAMEMATHEXPRESSION. THEY HOLD NO RELEVANCE TO BASEGAMEPIECE!!!
-        [TestCase(@"[A-Z]","A", Result = true)]
-        [TestCase(@"[A-Z]", "a", Result = false)]
-        [TestCase(@"[A-Z]", "Z", Result = true)]
-        [TestCase(@"[A-Z]", "b", Result = false)]
-        [TestCase(@"[A-Z]", "B", Result = true)]
-        [TestCase(@"[A-Z]", "1", Result = false)]
-        [TestCase(@"[a-z]", "1", Result = false)]
-        [TestCase(@"[a-z]", "a", Result = true)]
-        [TestCase(@"[a-z]", "h", Result = true)]
-        [TestCase(@"[a-z]", "b", Result = true)]
-        [TestCase(@"[a-z]", "z", Result = true)]
-        [TestCase(@"[a-z]", "1", Result = false)]
-        [TestCase(@"[a-z]", "G", Result = false)]
-        [TestCase(@"-?", "A", Result = true)]
-        [TestCase(@"-?", "-A", Result = true)]
-        [TestCase(@"-?", "--A", Result = false)]
-        [TestCase(@"-?", "---A", Result = false)]
-        public bool TestMathExpression(String pattern, String contentName)
-        {
-            int count = 0;
-            char[] checker = contentName.ToCharArray();
-            foreach (char a in checker){
-                if (a.Equals('-'))
-                {
-                    count++;
-                }
-            }
-
-            BaseGamePiece TestCard = new BaseGamePiece(20, 20, 0, 0, 0);
-            if ((System.Text.RegularExpressions.Regex.IsMatch(contentName, pattern) == true) && (count <= 1))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
 
     }
+
 }

@@ -233,7 +233,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableMiyagiKeyCard(Game game, Texture2D backgroundRectangle, string nameOfShape, string mathExpression,
+        public DrawableMiyagiKeyCard(Game game, Rectangle viewPort, Texture2D backgroundRectangle, string nameOfShape, string mathExpression,
             int widthOfThisKeyBlock,
             int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
             : base(game)
@@ -251,12 +251,12 @@ namespace HumanStorm.Miyagi.Framework
 
             //Initializes the top math expression in the key-card
             MathExpressionGamePiece = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
-                 new Rectangle(20, 20, 505, 500), mathExpression, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
+                 viewPort, mathExpression, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
 
 
             //Initializes the bottom shape in the key-card
             LetterB = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
-                 new Rectangle(20, 20, 505, 500), nameOfShape, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos +
+                 viewPort, nameOfShape, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos +
                  MathExpressionGamePiece.GetHeight(), zPos);
 
 
