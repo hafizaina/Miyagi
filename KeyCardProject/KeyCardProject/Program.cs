@@ -1,6 +1,5 @@
 using System;
-
-namespace KeyCardProject
+namespace HumanStorm.Miyagi.Framework
 {
 #if WINDOWS || XBOX
     static class Program
@@ -18,4 +17,3 @@ namespace KeyCardProject
     }
 #endif
 }
-
