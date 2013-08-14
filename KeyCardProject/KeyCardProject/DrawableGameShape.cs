@@ -37,12 +37,7 @@ namespace HumanStorm.Miyagi.Framework
         /// <summary>
         /// The scaled width of RectangleEnclosingThisObject based on the scale factor
         /// </summary>
-        float ScaledRectangleEnclosingThisObjectWidth;
-
-        /// <summary>
-        /// The scaled height of RectangleEnclosingThisObject based on the scale factor
-        /// </summary>
-        float ScaledRectangleEnclosingThisObjectHeight;
+        Rectangle ScaledRectangleEnclosingThisObject;
 
         /// <summary>
         /// Percentage to scale game shape with respect to container dimensions
@@ -113,8 +108,8 @@ namespace HumanStorm.Miyagi.Framework
             this.PrevMouseState = Mouse.GetState();
             TextureWidth = RectangleEnclosingThisObject.Width / 2;
             TextureHeight = RectangleEnclosingThisObject.Height / 2;
-            ScaledRectangleEnclosingThisObjectWidth = RectangleEnclosingThisObject.Width * SCALE_FACTOR;
-            ScaledRectangleEnclosingThisObjectHeight = RectangleEnclosingThisObject.Height * SCALE_FACTOR;
+            ScaledRectangleEnclosingThisObject = new Rectangle(RectangleEnclosingThisObject.X, RectangleEnclosingThisObject.Y,
+                    (int)(RectangleEnclosingThisObject.Width * SCALE_FACTOR), (int)(RectangleEnclosingThisObject.Height * SCALE_FACTOR)); ;
         }
 
         public void LoadContent(ContentManager content)
@@ -124,17 +119,33 @@ namespace HumanStorm.Miyagi.Framework
 
         public override void Draw(GameTime time)
         {
+            if (IsTargeted)
+            {
+                int ScaledTextureWidth = ScaledRectangleEnclosingThisObject.Width / 2;
+                int ScaledTextureHeight = ScaledRectangleEnclosingThisObject.Height / 2;
+                TextureX = (int)(xScaledPosition + ScaledRectangleEnclosingThisObject.Width / 2 - ScaledTextureWidth / 2);
+                TextureY = (int)(yScaledPosition + ScaledRectangleEnclosingThisObject.Height / 2 - ScaledTextureHeight / 2);
+                this.SharedSpriteBatch.Begin();
+                this.SharedSpriteBatch.Draw(backgroundRectangle, SetGameShapePositionAndScale(),ScaledRectangleEnclosingThisObject, Color.Green);
+                this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, ScaledTextureWidth, ScaledTextureHeight), base.ColorOfShape);
+                this.SharedSpriteBatch.End();
+
+            }
+            else
+            {
                 TextureX = RectangleEnclosingThisObject.X + RectangleEnclosingThisObject.Width / 2 - TextureWidth / 2;
                 TextureY = RectangleEnclosingThisObject.Y + RectangleEnclosingThisObject.Height / 2 - TextureHeight / 2;
                 this.SharedSpriteBatch.Begin();
                 this.SharedSpriteBatch.Draw(backgroundRectangle, RectangleEnclosingThisObject, Color.Green);
                 this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, TextureWidth, TextureHeight), base.ColorOfShape);
                 this.SharedSpriteBatch.End();
+            }
         }
 
         public override void Update(GameTime time)
         {
             if (this.RectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,
+                (int)this.GetScreenCoordinatesOfMouse().Y) || this.ScaledRectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,
                 (int)this.GetScreenCoordinatesOfMouse().Y))
             {
                 //if the mouse hovers over the rectangle, expand the rectangle to scaled size from its center.
@@ -179,8 +190,8 @@ namespace HumanStorm.Miyagi.Framework
             xCenter = RectangleEnclosingThisObject.X + (.5f * (float)RectangleEnclosingThisObject.Width);
             yCenter = RectangleEnclosingThisObject.Y + (.5f * (float)RectangleEnclosingThisObject.Height);
 
-            xScaledPosition = xCenter - (.5f * ScaledRectangleEnclosingThisObjectWidth);
-            yScaledPosition = yCenter - (.5f * ScaledRectangleEnclosingThisObjectHeight);
+            xScaledPosition = xCenter - (.5f * ScaledRectangleEnclosingThisObject.Width);
+            yScaledPosition = yCenter - (.5f * ScaledRectangleEnclosingThisObject.Height);
 
             return new Vector2(xScaledPosition, yScaledPosition);
         }
