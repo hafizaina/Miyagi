@@ -19,8 +19,8 @@ namespace HumanStorm.Miyagi.Framework
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DrawableGameShape test;
-        Texture2D backgroundRectColor;
-        Game game;
+        Texture2D backgroundRect;
+        //Game game;
 
 
         public Game1()
@@ -39,9 +39,12 @@ namespace HumanStorm.Miyagi.Framework
         {
             // TODO: Add your initialization logic here
             //spriteBatch = new SpriteBatch(GraphicsDevice);
-            //this.Services.AddService(typeof(SpriteBatch), spriteBatch);
+
+            backgroundRect = new Texture2D(GraphicsDevice, 1, 1);
+            backgroundRect.SetData(new Color[] { Color.White });
             base.Initialize();
             base.IsMouseVisible = true;
+         
 
         }
 
@@ -54,9 +57,7 @@ namespace HumanStorm.Miyagi.Framework
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), spriteBatch);
-            backgroundRectColor = new Texture2D(GraphicsDevice, 1, 1);
-            backgroundRectColor.SetData(new Color[] { Color.White });
-            test = new DrawableGameShape("square", backgroundRectColor, Color.Blue, spriteBatch, new Rectangle(0, 0, 50, 50), 50, 50, 200, 300, 0);
+            test = new DrawableGameShape("square", backgroundRect, Color.Blue, spriteBatch, new Rectangle(0, 0, 50, 50), 300, 300, 20, 20, 0);
             test.LoadContent(this.Content);            
 
             // TODO: use this.Content to load your game content here

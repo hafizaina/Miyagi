@@ -80,8 +80,8 @@ namespace HumanStorm.Miyagi.Framework
         public override void Draw(GameTime time)
         {
             this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
-            this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
+            this.SharedSpriteBatch.Draw(backgroundRectangle, ViewPort, Color.Green);
+            this.SharedSpriteBatch.Draw(backgroundRectangle, RectangleEnclosingThisObject, Color.Red);
             this.SetMathExpressionPositionAndScale();
             this.SharedSpriteBatch.DrawString(this.Font, this.MathExpression, aligned, Color.Blue, 0.0f, new Vector2(0, 0), 1.0f, new SpriteEffects(), 0.0f);
             this.SharedSpriteBatch.End();

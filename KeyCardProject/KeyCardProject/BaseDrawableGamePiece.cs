@@ -70,7 +70,7 @@ namespace HumanStorm.Miyagi.Framework
         /// <summary>
         /// Texture needed to color the background of the keyblock.
         /// </summary>
-        public Texture2D backgroundRectangleColor;
+        public Texture2D backgroundRectangle;
 
         /// <param name="contentToDraw">
         /// </param>
@@ -90,13 +90,12 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseDrawableGamePiece(Texture2D backgroundColor ,Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
+        public BaseDrawableGamePiece(Texture2D backgroundRect, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
             heightOfGamePiece, float xPos, float yPos, float zPos)
-            : base
-                (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+            : base (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.ViewPort = viewPort;
-            this.backgroundRectangleColor = backgroundColor;
+            this.backgroundRectangle = backgroundRect;
             this.ColorOfShape = colorOfGamePiece;
        
             this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y), this.Width, this.Height);
@@ -168,8 +167,8 @@ namespace HumanStorm.Miyagi.Framework
         public override void SetPosition(float xPos, float yPos, float zPos=0f)
         {   
             //Position with respect to the ViewPort's top-left corner.
-            this.rectangleContainingThisObject.X = ((int)xPos+this.ViewPort.X);
-            this.rectangleContainingThisObject.Y = ((int)yPos+this.ViewPort.Y);
+            this.rectangleContainingThisObject.X = ((int)xPos);
+            this.rectangleContainingThisObject.Y = ((int)yPos);
             
             //Position with respect to the graphicsDisplayDevice.
             base.SetPosition(xPos, yPos, zPos);

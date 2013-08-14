@@ -33,6 +33,21 @@ namespace HumanStorm.Miyagi.Framework
         /// Determines if KeyCard is being dragged
         /// </summary>
         bool dragging = false;
+
+        /// <summary>
+        /// The scaled width of RectangleEnclosingThisObject based on the scale factor
+        /// </summary>
+        float ScaledRectangleEnclosingThisObjectWidth;
+
+        /// <summary>
+        /// The scaled height of RectangleEnclosingThisObject based on the scale factor
+        /// </summary>
+        float ScaledRectangleEnclosingThisObjectHeight;
+
+        /// <summary>
+        /// Percentage to scale game shape with respect to container dimensions
+        /// </summary>
+        private const float PERCENTAGE_SIZE_OF_CONTAINER_RECTANGLE_TO_MAKE_SIZE_OF_GAME_SHAPE = .5f;
         
 #region ScalingMotionData
     /// <summary>
@@ -63,7 +78,14 @@ namespace HumanStorm.Miyagi.Framework
     int yDisplacement;
 #endregion Dragging
 
-        // Operations
+#region TextureData
+    private int TextureWidth;
+    private int TextureHeight;
+    private int TextureX;
+    private int TextureY;
+#endregion TextureData
+
+    // Operations
 
         /// <summary>
         /// Initializes a new DrwableGameShape object.
@@ -89,6 +111,10 @@ namespace HumanStorm.Miyagi.Framework
         {
             this.NameOfShape = NameOfShape;
             this.PrevMouseState = Mouse.GetState();
+            TextureWidth = RectangleEnclosingThisObject.Width / 2;
+            TextureHeight = RectangleEnclosingThisObject.Height / 2;
+            ScaledRectangleEnclosingThisObjectWidth = RectangleEnclosingThisObject.Width * SCALE_FACTOR;
+            ScaledRectangleEnclosingThisObjectHeight = RectangleEnclosingThisObject.Height * SCALE_FACTOR;
         }
 
         public void LoadContent(ContentManager content)
@@ -98,24 +124,65 @@ namespace HumanStorm.Miyagi.Framework
 
         public override void Draw(GameTime time)
         {
-            this.SharedSpriteBatch.Begin();
-            this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
-            //this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
-            this.SharedSpriteBatch.Draw(TextureForShape, RectangleEnclosingThisObject, base.ColorOfShape);
-            this.SharedSpriteBatch.End();
+                TextureX = RectangleEnclosingThisObject.X + RectangleEnclosingThisObject.Width / 2 - TextureWidth / 2;
+                TextureY = RectangleEnclosingThisObject.Y + RectangleEnclosingThisObject.Height / 2 - TextureHeight / 2;
+                this.SharedSpriteBatch.Begin();
+                this.SharedSpriteBatch.Draw(backgroundRectangle, RectangleEnclosingThisObject, Color.Green);
+                this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, TextureWidth, TextureHeight), base.ColorOfShape);
+                this.SharedSpriteBatch.End();
         }
 
         public override void Update(GameTime time)
         {
-            MouseState ms = Mouse.GetState();
-            if (IsMouseOver(ms))
+            if (this.RectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,
+                (int)this.GetScreenCoordinatesOfMouse().Y))
             {
+                //if the mouse hovers over the rectangle, expand the rectangle to scaled size from its center.
                 this.SetColor(Color.Red);
+                Vector2 originalRectangleCenter = new Vector2(this.RectangleEnclosingThisObject.Center.X,
+                    this.RectangleEnclosingThisObject.Center.Y);
+
+                this.IsSelected = true;
+                this.IsTargeted = true;
+
+                Vector2 scaledRectangleCenter = new Vector2(this.RectangleEnclosingThisObject.Center.X,
+                    this.RectangleEnclosingThisObject.Center.Y);
+
+                Vector2 displacement = Vector2.Subtract(scaledRectangleCenter, originalRectangleCenter);
+
+                this.SetPosition(this.Position.X - displacement.X, this.Position.Y - displacement.Y);
             }
-            else if (!(IsMouseOver(ms)))
+
+            else
             {
+
+                //But if not, draw the original rectangle on the screen and de-scale it from the center.
                 this.SetColor(Color.Blue);
+                Vector2 scaledRectangleCenter = new Vector2(this.RectangleEnclosingThisObject.Center.X,
+                    this.RectangleEnclosingThisObject.Center.Y);
+
+                this.IsSelected = false;
+                this.IsTargeted = false;
+
+                Vector2 originalRectangleCenter = new Vector2(this.RectangleEnclosingThisObject.Center.X,
+                    this.RectangleEnclosingThisObject.Center.Y);
+
+                Vector2 displacement = Vector2.Subtract(originalRectangleCenter, scaledRectangleCenter);
+
+                this.SetPosition(this.Position.X - displacement.X, this.Position.Y - displacement.Y);
             }
+
+        }
+
+        public Vector2 SetGameShapePositionAndScale()
+        {
+            xCenter = RectangleEnclosingThisObject.X + (.5f * (float)RectangleEnclosingThisObject.Width);
+            yCenter = RectangleEnclosingThisObject.Y + (.5f * (float)RectangleEnclosingThisObject.Height);
+
+            xScaledPosition = xCenter - (.5f * ScaledRectangleEnclosingThisObjectWidth);
+            yScaledPosition = yCenter - (.5f * ScaledRectangleEnclosingThisObjectHeight);
+
+            return new Vector2(xScaledPosition, yScaledPosition);
         }
 
         public void SetColor(Color color)
@@ -130,25 +197,8 @@ namespace HumanStorm.Miyagi.Framework
             return new Vector2(xPos, yPos);
         }
 
-        //public void DrawNormalGameShape()
-        //{
-        //    this.SharedSpriteBatch.Begin();
-        //    this.SharedSpriteBatch.Draw(backgroundRectangleColor, ViewPort, Color.Green);
-        //    this.SharedSpriteBatch.Draw(backgroundRectangleColor, RectangleEnclosingThisObject, Color.Red);
-        //}
-
         public bool IsMouseOver(MouseState mouseState)
         {
-            //if (IsSelected)
-            //{
-            //    return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + GetWidth() * SCALE_FACTOR)) &&
-            //        (mouseState.Y > yScaledPosition) && (mouseState.Y < (yScaledPosition + GetHeight() * SCALE_FACTOR)));
-            //}
-            //else
-            //{
-            //    return ((mouseState.X > GetPosition().X) && (mouseState.X < (GetPosition().X + GetWidth())) &&
-            //        (mouseState.Y > GetPosition().Y) && (mouseState.Y < (GetPosition().Y + GetHeight())));
-            //}
             if (IsSelected)
             {
                 return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + GetWidth() * SCALE_FACTOR)) &&
