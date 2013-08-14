@@ -14,11 +14,14 @@ namespace HumanStorm.Miyagi.Framework.UnitTests
     {
         [Test]
         [Description("Verifies that when the mouse is over anywhere in the top half of the keyblock, that the key-card is enlarged.")]
-        public void TestInputDeviceCursorOverTopHalfOfKeyCard()
+        public void MouseOverTopHalfOfKeycard()
         {
-            Game testGame = new Game();
-            Rectangle testViewPort = new Rectangle(20,20,500,505);
-            DrawableMiyagiKeyCard testCard = new DrawableMiyagiKeyCard (testGame, testViewPort,  
+            Game1 testGame = new Game1();
+            Rectangle testViewPort = new Rectangle(0,0,500,505);
+            DrawableMiyagiKeyCard testCard = new DrawableMiyagiKeyCard(testGame, testViewPort, null, "a", "B", 20, 20, 0, 0, 0);
+            Mouse.SetPosition(5, 5);
+            testCard.Update(new GameTime());
+            Assert.True(testCard.MathExpressionGamePiece.IsTargeted,"Checks if the top half of the keycard was highlighted over with the mouse.");
         }
 
 
@@ -28,13 +31,23 @@ namespace HumanStorm.Miyagi.Framework.UnitTests
         [Test(Description = "Verifies that when the mouse is over anywhere in the bottom half of the keyblock, that the key-card is enlarged.")]
         public void TestInputDeviceCursorOverBottomHalfOfKeyCard()
         {
-            throw new NotImplementedException();
+            Game1 testGame = new Game1();
+            Rectangle testViewPort = new Rectangle(0, 0, 500, 505);
+            DrawableMiyagiKeyCard testCard = new DrawableMiyagiKeyCard(testGame, testViewPort, null, "a", "B", 20, 20, 0, 0, 0);
+            Mouse.SetPosition(19, 19);
+            testCard.Update(new GameTime());
+            Assert.True(testCard.LetterB.IsTargeted, "Checks if the bottom half of the keycard was highlighted over with the mouse.");
         }
 
         [Test(Description = "Verifies that when the mouse is NOT over either key-block, that the key-card is NOT enlarged.")]
         public void TestInputDeviceCursorNotOverTopPartOfKeyCard()
         {
-            throw new NotImplementedException();
+            Game1 testGame = new Game1();
+            Rectangle testViewPort = new Rectangle(0, 0, 500, 505);
+            DrawableMiyagiKeyCard testCard = new DrawableMiyagiKeyCard(testGame, testViewPort, null, "a", "B", 20, 20, 0, 0, 0);
+            Mouse.SetPosition(91, 91);
+            testCard.Update(new GameTime());
+            Assert.True(testCard.LetterB.IsTargeted == false, "Checks if the keycard is not highlighted over with the mouse.");
         }
     }
 }

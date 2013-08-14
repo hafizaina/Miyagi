@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1C7C8B00-98D3-474A-BCD7-E328FA62B431}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UnitTestsForKeyCardProject</RootNamespace>
     <AssemblyName>UnitTestsForKeyCardProject</AssemblyName>
@@ -64,12 +64,16 @@
   <ItemGroup>
     <Compile Include="BaseDrawableGamePieceTests.cs" />
     <Compile Include="BaseGamePieceTests.cs" />
+    <Compile Include="DelanteGameTestClass.cs" />
     <Compile Include="DrawableGameMathExpressionTests.cs" />
     <Compile Include="DrawableMiyagiKeycardTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\Spritey.xnb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NUnit\nunit-console-runner.dll" />
     <None Include="NUnit\nunit.framework.dll" />
     <None Include="NUnit\nunit.mocks.dll" />
@@ -82,6 +86,9 @@
       <Project>{5AAC7931-2062-4319-A1AA-9B18C21472DE}</Project>
       <Name>KeyCardProject</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

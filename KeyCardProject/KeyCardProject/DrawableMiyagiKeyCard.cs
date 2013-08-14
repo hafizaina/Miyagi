@@ -37,19 +37,9 @@ namespace HumanStorm.Miyagi.Framework
         SpriteBatch spriteBatch;
 
         /// <summary>
-        /// Spritefont needed to draw the math expression on the keyblock.
-        /// </summary>
-        SpriteFont spritefont;
-
-        /// <summary>
         /// The previous state of the mouse while dragging is occuring.
         /// </summary>
         MouseState PrevMouseState;
-
-        /// <summary>
-        /// Boolean flag to tell whether LoadContent() was called or not. Prevents multiple calls to LoadContent().
-        /// </summary>
-        private bool IsLoadContentCalled;
 
         /// <summary>
         /// Boolean flag to tell if the user specifically clicks on the shape part of the miyagi keycard, and will allow
@@ -62,6 +52,11 @@ namespace HumanStorm.Miyagi.Framework
         /// expansion and dragging of the keyblock to happen accordingly.
         /// </summary>
         private bool MathExpressionGamePieceWasClicked;
+
+        /// <summary>
+        /// Boolean to tell whether the user left-mouseclicks on the current keycard object.
+        /// </summary>
+        public bool isSelected;
         // Operations
 
         /// <summary>
@@ -130,6 +125,7 @@ namespace HumanStorm.Miyagi.Framework
                     if (MathExpressionGamePiece.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)
                         || LetterB.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y))
                     {
+                        this.isSelected = true;
                         dragging = true;
                         // On initial click on object, record the mouse state.
                         MouseState currentMouseState = Mouse.GetState();
@@ -140,6 +136,7 @@ namespace HumanStorm.Miyagi.Framework
             else
             {
                 // If dragging is true, keep updating currentMouseState
+                this.isSelected = false;
                 MouseState currentMouseState = Mouse.GetState();
 
                 // If mouse position has moved, move keycard object by its displacement, and drag based on
@@ -238,46 +235,21 @@ namespace HumanStorm.Miyagi.Framework
             int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
             : base(game)
         {
-
-            //IsLoadContentCalled is initialized to false. When it becomes true, this will prevent this.LoadContent() 
-            //from being called twice within the program.
-
-            IsLoadContentCalled = false;
             spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
-            spritefont = (SpriteFont)game.Services.GetService(typeof(SpriteFont));
-
-            this.LoadContent();
-            IsLoadContentCalled = true;
 
             //Initializes the top math expression in the key-card
-            MathExpressionGamePiece = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
+            MathExpressionGamePiece = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, game.Content, Color.Red,
                  viewPort, mathExpression, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
 
 
             //Initializes the bottom shape in the key-card
-            LetterB = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
+            LetterB = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, game.Content, Color.Red,
                  viewPort, nameOfShape, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos +
                  MathExpressionGamePiece.GetHeight(), zPos);
 
 
 
             game.Components.Add(this);
-        }
-
-        /// <summary>
-        /// Allows the spritefont to be loaded into the game components for the MathExpression to be created.
-        /// 
-        /// Make sure you prefix this declaration with "protected override void LoadContent()."
-        /// 
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        protected override void LoadContent()
-        {
-            if (IsLoadContentCalled == false)
-            {
-                spritefont = Game.Content.Load<SpriteFont>("Spritey");
-            }
         }
 
         /// <summary>
@@ -363,10 +335,10 @@ namespace HumanStorm.Miyagi.Framework
         public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
             MathExpressionGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
-            
-            LetterB.SetPosition(MathExpressionGamePiece.GetPosition().X, (MathExpressionGamePiece.GetPosition().Y + 
+
+            LetterB.SetPosition(MathExpressionGamePiece.GetPosition().X, (MathExpressionGamePiece.GetPosition().Y +
                 MathExpressionGamePiece.GetHeight()), 0);
-            
+
             LetterB.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
         }
 

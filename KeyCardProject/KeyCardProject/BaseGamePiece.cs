@@ -162,7 +162,8 @@ namespace HumanStorm.Miyagi.Framework
         }
 
         /// <summary>
-        /// Returns the Width of this object.  If IsTargeted is set to true, then the returned width should be multiplied by the SCALE_FACTOR.
+        /// Returns the Width of this object.  If IsTargeted is set to true, then the returned width should be multiplied 
+        /// by the SCALE_FACTOR.
         /// </summary>
         /// <returns>
         /// </returns>

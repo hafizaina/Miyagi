@@ -50,8 +50,11 @@ namespace HumanStorm.Miyagi.Framework.UnitTests
         [ExpectedException(typeof(System.ArgumentException))]
         public void TestInvalidMathExpressions(String contentName)
         {
+            Game testGame = new Game();
+            testGame.Content.RootDirectory = "Content";
+            ContentManager testContent = new ContentManager(testGame.Services);
             DrawableGameMathExpression TestCard = new DrawableGameMathExpression(null, null,
-            null, Color.Red, new Rectangle(10, 10, 0, 0), contentName, 10, 10, 0, 0, 0);
+            testContent, Color.Red, new Rectangle(10, 10, 0, 0), contentName, 10, 10, 0, 0, 0);
         }
 
        

@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 /// <summary>
 ///  A class that represents a DrawableGameMathExpression object.
 /// </summary>
@@ -13,15 +14,28 @@ namespace HumanStorm.Miyagi.Framework
     {
         // Attributes
         /// <summary>
-        /// The spritefont needed to create the math expression letter.
+        /// The ContentManager object associated with the game that this object is part of.
         /// </summary>
-        public SpriteFont Font;
+        private ContentManager contentForGame;
 
         /// <summary>
         /// The math expression to be drawn on the key-block.
         /// </summary>
         public String MathExpression;
 
+        /// <summary>
+        /// This boolean prevents LoadContent from being called more than once. It is set to false once in the constructor, and then
+        /// it is set to true in the Draw() method once it needs to be called. Successive calls to Draw() will prevent LoadContent()
+        /// from being called more than once.
+        /// </summary>
+        private bool hasLoadContentBeenCalled;
+
+        /// <summary>
+        /// Spritefont object pulled from the ContentManager. This allows the font to not be an issue in object instantiation, only becoming
+        /// needed once Draw() is called.
+        /// </summary>
+        private SpriteFont Font;
+        
         /// <summary>
         /// The scale factor needed to make sure the math expression letters are a good portion of the key-block it exists on.
         /// </summary>
@@ -69,7 +83,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableGameMathExpression(Texture2D backgroundRectColor, SpriteBatch sharedSprite, SpriteFont spriteFont,
+        public DrawableGameMathExpression(Texture2D backgroundRectColor, SpriteBatch sharedSprite, ContentManager gameContent,
             Color colorOfExpression, Rectangle viewPort, String mathExpression, int widthOfThisGamePiece, int heightOfGamePiece,
             float xPos, float yPos, float zPos)
             : base(backgroundRectColor, colorOfExpression, sharedSprite,
@@ -80,10 +94,10 @@ namespace HumanStorm.Miyagi.Framework
             //in the expression.
             //It does allow for upper-case and lower-case letters.
             String regularExpressionPattern = @"^-?(?i)[A-Z]\z";
-
-            this.Font = spriteFont;
-
-
+            
+            this.hasLoadContentBeenCalled = false;
+            
+            this.contentForGame = gameContent;
 
             if ((System.Text.RegularExpressions.Regex.IsMatch(mathExpression, regularExpressionPattern) == true))
             {
@@ -98,12 +112,18 @@ namespace HumanStorm.Miyagi.Framework
         }
 
         /// <summary>
-        /// This method draws the given math expression onto the game screen.
+        /// This method draws the given math expression onto the game screen and loads the content needed to do so if it has not been
+        /// called already.
         /// </summary>
         /// <param name="time"></param>
         public override void Draw(GameTime time)
         {
+            if (this.hasLoadContentBeenCalled == false)
+            {
 
+                this.LoadContent();
+                hasLoadContentBeenCalled = true;
+            }
             this.SharedSpriteBatch.Draw(backgroundRectangle, RectangleEnclosingThisObject, Color.Red);
 
             this.SharedSpriteBatch.DrawString(this.Font, this.MathExpression, this.SetMathExpressionPositionAndScale(), Color.Blue, 0.0f,
@@ -188,6 +208,17 @@ namespace HumanStorm.Miyagi.Framework
             }
 
             #endregion LogicToCoverDescalingRectangleFromCenter
+        }
+
+
+        /// <summary>
+        /// This method was implemented in order to allow us to create a MathExpression object and be able to instantiate it in our unit
+        /// tests. It was needed because we could not access the Spritefont file from outside our game class, nor could we
+        /// get an outside GraphicsDevice to instantiate. (8/14/2013)
+        /// </summary>
+        private void LoadContent()
+        {
+            Font = contentForGame.Load<SpriteFont>("Spritey");
         }
     }
 }

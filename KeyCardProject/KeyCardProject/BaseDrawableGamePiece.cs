@@ -89,6 +89,7 @@ namespace HumanStorm.Miyagi.Framework
             : base(widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.ViewPort = viewPort;
+
             this.backgroundRectangle = backgroundRect;
             this.ColorOfShape = colorOfGamePiece;
 
