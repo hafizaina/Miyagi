@@ -1,14 +1,6 @@
-
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.GamerServices;
 
 /// <summary>
 /// This class Returns the absolute position of the top left corner of this DrawableGamePiece with 
@@ -24,25 +16,29 @@ namespace HumanStorm.Miyagi.Framework
         //Attributes
 
         /// <summary>
-        /// The invisible rectangle enclosing this image.  Adjusting the size and position of this rectangle. 
+        /// The invisible rectangle enclosing this image.  Adjusting the size and position of this rectangle. This object is a getter.
+        /// Its purpose is to return the current rectangle, based upon whether the rectangle is scaled or not.
         /// </summary>
         //Implementation Details:  The size and the position of this Rectangle stores the size and position of the image.  
         //So to change the size of the image, change the size of the rectangle.  And to change position of the image, 
         //change the position of the rectangle.
-
         public Rectangle RectangleEnclosingThisObject
         {
-            get { return this.rectangleContainingThisObject; }
+            get
+            {
+                this.rectangleContainingThisObject.Width = this.GetWidth();
+                this.rectangleContainingThisObject.Height = this.GetHeight();
+                return this.rectangleContainingThisObject;
+            }
         }
 
         /// <summary>
-        /// The rectangle that encloses the image drawn on the screen representing a game piece.
+        /// The rectangle that encloses the image drawn on the screen representing a game piece. This is the actual rectangle of the object.
         /// </summary>
         //Implementation Details:  This is the variable that should have it's position updated and size updated.  
         //this.RectangleEnclosingThisImage just 
         //returns a new rectangle whose values are taken from 
-        //the width, height, and position of this variable.
-        
+        //the width, height, and position of this variable.        
         private Rectangle rectangleContainingThisObject;
 
         /// <summary>
@@ -50,8 +46,7 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         //Implementation Details:  The constructor should initialize this variable as 
         //this.SharedSpriteBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
-        //This comes from http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.game.services.aspx.
-        
+        //This comes from http://msdn.microsoft.com/en-us/library/microsoft.xna.framework.game.services.aspx.        
         public SpriteBatch SharedSpriteBatch;
 
         /// <summary>
@@ -59,18 +54,17 @@ namespace HumanStorm.Miyagi.Framework
         /// </summary>
         //Implementation Details:  Just declare this as a property and let the getter return.
         //(Rectangle)this.Game.Services.GetService(typeof(Rectangle));
-        
         public Rectangle ViewPort;
 
         /// <summary>
         ///The color of the shape, and the color of the math expression, to be drawn on the screen.
         /// </summary>
-        public Color ColorOfShape;  
+        public Color ColorOfShape;
 
         /// <summary>
         /// Texture needed to color the background of the keyblock.
         /// </summary>
-        public Texture2D backgroundRectangleColor;
+        public Texture2D backgroundRectangle;
 
         /// <param name="contentToDraw">
         /// </param>
@@ -90,17 +84,18 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public BaseDrawableGamePiece(Texture2D backgroundColor ,Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort, int widthOfThisGamePiece, int
-            heightOfGamePiece, float xPos, float yPos, float zPos)
-            : base
-                (widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
+        public BaseDrawableGamePiece(Texture2D backgroundRect, Color colorOfGamePiece, SpriteBatch sharedSprite, Rectangle viewPort,
+            int widthOfThisGamePiece, int heightOfGamePiece, float xPos, float yPos, float zPos)
+            : base(widthOfThisGamePiece, heightOfGamePiece, xPos, yPos, zPos)
         {
             this.ViewPort = viewPort;
-            this.backgroundRectangleColor = backgroundColor;
+            this.backgroundRectangle = backgroundRect;
             this.ColorOfShape = colorOfGamePiece;
-       
-            this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y), this.Width, this.Height);
-           
+
+
+            this.rectangleContainingThisObject = new Rectangle(((int)xPos+this.ViewPort.X), ((int)yPos+this.ViewPort.Y),
+                this.Width, this.Height);
+
             this.SharedSpriteBatch = sharedSprite;
         }
 
@@ -114,13 +109,13 @@ namespace HumanStorm.Miyagi.Framework
         /// yPos - The y-position of the left corner of the key-block.
         /// </summary>
         // Implementation details:  Draw the way you normally would draw in XNA but for the SpriteBatch, use this.SharedSpriteBatch.
-        
+
         /// <param name="time">
         /// </param>
         /// <returns>
         /// </returns>
         public abstract void Draw(GameTime time);
-        
+
 
         /// <summary>
         /// Checks to determine if the input device is currently hovering over the image that this object displays.  This also updates 
@@ -165,15 +160,15 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public override void SetPosition(float xPos, float yPos, float zPos=0f)
-        {   
-            //Position with respect to the ViewPort's top-left corner.
-            this.rectangleContainingThisObject.X = ((int)xPos+this.ViewPort.X);
-            this.rectangleContainingThisObject.Y = ((int)yPos+this.ViewPort.Y);
-            
+        public override void SetPosition(float xPos, float yPos, float zPos = 0f)
+        {
+       
+
+            this.rectangleContainingThisObject.X = (int)xPos;
+            this.rectangleContainingThisObject.Y = (int)yPos;
             //Position with respect to the graphicsDisplayDevice.
             base.SetPosition(xPos, yPos, zPos);
-            
+
         }
 
         /// <summary>
@@ -215,7 +210,8 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public Vector3 GetPositionWithRespectToViewPort()
         {
-            return new Vector3(this.rectangleContainingThisObject.X, this.rectangleContainingThisObject.Y, 0);
+            return new Vector3(this.rectangleContainingThisObject.X -this.ViewPort.X,
+                this.rectangleContainingThisObject.Y-this.ViewPort.Y, 0);
 
         }
 
@@ -228,7 +224,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public override MPoint3D GetPosition()
         {
-            return base.GetPosition();
+            return new MPoint3D(this.rectangleContainingThisObject.X, 
+                this.rectangleContainingThisObject.Y, 
+                0);
+
         }
     } /* end class DrawableGamePiece */
 }

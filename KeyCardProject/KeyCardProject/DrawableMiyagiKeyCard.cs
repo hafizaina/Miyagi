@@ -1,34 +1,67 @@
-
-/// <summary>
- /// </summary>
-/// <summary>
-    /// The client program should add an instance of this class to the list of game components.
-     /// </summary>
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+/// <summary>
+/// The client program should add an instance of this class to the list of game components.
+/// </summary>
+/// 
 namespace HumanStorm.Miyagi.Framework
 {
     public class DrawableMiyagiKeyCard : DrawableGameComponent
     {
         // Attributes
 
-        public DrawableGameShape ShapeGamePiece;
+        //   public DrawableGameShape ShapeGamePiece;
 
+        //#########################################
+        //Using temporary variable names to follow logic. CHANGE THESE NAMES BACK ACCORDING TO UML!!
+        //##########################################
+        /// <summary>
+        /// Shape block connected to math expression block.
+        /// </summary>
+        public DrawableGameMathExpression LetterB;
+
+        /// <summary>
+        /// Math expression block connected to shape block.
+        /// </summary>
         public DrawableGameMathExpression MathExpressionGamePiece;
 
-        public DrawableGameMathExpression Math2;
+        /// <summary>
+        /// Boolean flag to decide whether the keyblock is being dragged across the screen.
+        /// </summary>
+        bool dragging = false;
 
+        /// <summary>
+        /// Spritebatch needed to instantiate the shape and math expression objects.
+        /// </summary>
         SpriteBatch spriteBatch;
-        Texture2D backgroundRect;
 
+        /// <summary>
+        /// Spritefont needed to draw the math expression on the keyblock.
+        /// </summary>
+        SpriteFont spritefont;
+
+        /// <summary>
+        /// The previous state of the mouse while dragging is occuring.
+        /// </summary>
+        MouseState PrevMouseState;
+
+        /// <summary>
+        /// Boolean flag to tell whether LoadContent() was called or not. Prevents multiple calls to LoadContent().
+        /// </summary>
+        private bool IsLoadContentCalled;
+
+        /// <summary>
+        /// Boolean flag to tell if the user specifically clicks on the shape part of the miyagi keycard, and will allow
+        /// expansion and dragging of the keyblock to happen accordingly.
+        /// </summary>
+        private bool LetterBWasClicked;
+
+        /// <summary>
+        /// Boolean flag to tell if the user specifically clicks on the math expression part of the miyagi keycard, and will allow
+        /// expansion and dragging of the keyblock to happen accordingly.
+        /// </summary>
+        private bool MathExpressionGamePieceWasClicked;
         // Operations
 
         /// <summary>
@@ -36,81 +69,134 @@ namespace HumanStorm.Miyagi.Framework
         /// 
         /// Implementation Details:
         /// 
-        /// When the mouse cursor is over either the top or bottom game piece (ShapeGamePiece and the MathExpressionGamePiece), then IsTargeted should be set to true for both of these objects.  The same goes for "IsSelected."  If one is selected, then both objects should be selected.  
+        /// When the mouse cursor is over either the top or bottom game piece (ShapeGamePiece and the MathExpressionGamePiece), 
+        /// then IsTargeted should be set to true for both of these objects.  The same goes for "IsSelected."  If one is selected, 
+        /// then both objects should be selected.  
         /// 
-        /// When both ShapeGamePiece and MathExpressionGamePiece are enlarged, then position them so that the line of contact between them is positioned so that after both shapes are enlarged, The top block is shift up and the bottom is shifted down so that the top and bottom block make contact at the same location.
+        /// When both ShapeGamePiece and MathExpressionGamePiece are enlarged, then position them so that the line of contact 
+        /// between them is positioned so that after both shapes are enlarged, The top block is shift up and the bottom is shifted 
+        /// down so that the top and bottom block make contact at the same location.
         /// </summary>
         /// <param name="time">
         /// </param>
         /// <returns>
         /// </returns>
-        public void Update(GameTime time)
-        {   
+        public override void Update(GameTime time)
+        {
+            MathExpressionGamePiece.Update(time);
+            LetterB.Update(time);
+            LetterBWasClicked = false;
+            MathExpressionGamePieceWasClicked = false;
 
-            int mouseX = Mouse.GetState().X;
-            int mouseY = Mouse.GetState().Y;
-            int mathBlockWidthBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().X+MathExpressionGamePiece.GetWidth();
-            int mathBlockHeightBorder = (int)MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y + MathExpressionGamePiece.GetHeight();
-            int shapeBlockWidthBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetWidth();
-            int shapeBlockHeightBorder = (int)ShapeGamePiece.GetPositionWithRespectToViewPort().X + ShapeGamePiece.GetHeight();
-           
-            //If mouse is over one, set both to true.
-            //Mouse has to be between block's x and width, or
-            //between block's y and height.
 
-            if(((MathExpressionGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
-                && (mouseX <= mathBlockWidthBorder)))
+
+
+            //###################################
+            // LOGIC TO KEEP BLOCKS POSITIONED ONE OF TOP OF THE OTHER.
+            //###################################
+            // If the math expression is targeted, then the shape must also be targeted. Therefore,
+            // the shape must be anchored below the math expression. This if-conditional allows for the shape
+            // to always be anchored below the math expression.
+            //Similarly, if the shape is targeted, then the math expression must also be targeted. Therefore,
+            // the math expression must be anchored above the shape. This if-conditional allows for the math expression
+            // to always be anchored above the shape.
+            if (LetterB.IsTargeted == true)
             {
-                MathExpressionGamePiece.IsSelected = true;
+
                 MathExpressionGamePiece.IsTargeted = true;
-               ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
+                LetterBWasClicked = true;
+                MathExpressionGamePieceWasClicked = false;
+
             }
-            else if (((MathExpressionGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
-                && (mouseY <= mathBlockHeightBorder)))
+
+            else if (MathExpressionGamePiece.IsTargeted == true)
             {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
+
+                LetterB.IsTargeted = true;
+                MathExpressionGamePieceWasClicked = true;
+                LetterBWasClicked = false;
+
             }
-            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().X <= mouseX)
-            && (mouseX <= shapeBlockWidthBorder)))
+
+            #region MOUSE DRAG
+
+            int xDisplacement = 0;
+            int yDisplacement = 0;
+
+            if (dragging == false)
             {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
-            }
-            else if (((ShapeGamePiece.GetPositionWithRespectToViewPort().Y <= mouseY)
-            && (mouseY <= shapeBlockHeightBorder)))
-            {
-                MathExpressionGamePiece.IsSelected = true;
-                MathExpressionGamePiece.IsTargeted = true;
-                  ShapeGamePiece.IsSelected = true;
-                ShapeGamePiece.IsTargeted = true;
+                if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                {
+                    if (MathExpressionGamePiece.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)
+                        || LetterB.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y))
+                    {
+                        dragging = true;
+                        // On initial click on object, record the mouse state.
+                        MouseState currentMouseState = Mouse.GetState();
+                        PrevMouseState = currentMouseState;
+                    }
+                }
             }
             else
             {
-                MathExpressionGamePiece.IsSelected = false;
-                MathExpressionGamePiece.IsTargeted = false;
-                  ShapeGamePiece.IsSelected = false;
-                ShapeGamePiece.IsTargeted = false;
+                // If dragging is true, keep updating currentMouseState
+                MouseState currentMouseState = Mouse.GetState();
+
+                // If mouse position has moved, move keycard object by its displacement, and drag based on
+                // which part of the keycard (the shape or the math expression) was grabbed specifically.
+                if (PrevMouseState.X != currentMouseState.X || PrevMouseState.Y != currentMouseState.Y)
+                {
+                    xDisplacement = currentMouseState.X - PrevMouseState.X;
+                    yDisplacement = currentMouseState.Y - PrevMouseState.Y;
+                }
+
+                if (MathExpressionGamePieceWasClicked == true)
+                {
+                    float xPos = MathExpressionGamePiece.GetPosition().X + xDisplacement;
+                    float yPos = MathExpressionGamePiece.GetPosition().Y + yDisplacement;
+                    MathExpressionGamePiece.SetPosition(xPos, yPos, 0f);
+                }
+
+                else if (LetterBWasClicked == true)
+                {
+                    float xPos = LetterB.GetPosition().X + xDisplacement;
+                    float yPos = LetterB.GetPosition().Y + yDisplacement;
+                    LetterB.SetPosition(xPos, yPos, 0f);
+                }
+
+                if (Mouse.GetState().LeftButton == ButtonState.Released)
+                {
+                    dragging = false;
+                }
+
+                // Update placement variables (reset displacement back to 0)
+
+                PrevMouseState = currentMouseState;
+                xDisplacement = 0;
+                yDisplacement = 0;
             }
-            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, 
-                (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
+
+            #endregion MOUSE DRAG
+
+            this.SetPositionAuxilary();
+
+            base.Update(time);
         }
 
         /// <summary>
-        /// No need to call this method.  
+        /// No need to call this method.  Just calls upon the separate draw methods of the MathExpression and the GameShape.
         /// </summary>
         /// <param name="time">
         /// </param>
         /// <returns>
         /// </returns>
-        public void Draw(GameTime time)
+        public override void Draw(GameTime time)
         {
+
+            MathExpressionGamePiece.Draw(time);
+            LetterB.Draw(time);
             base.Draw(time);
+
         }
 
         /// <summary>
@@ -147,17 +233,39 @@ namespace HumanStorm.Miyagi.Framework
         /// </param>
         /// <returns>
         /// </returns>
-        public DrawableMiyagiKeyCard(Game game, string nameOfShape, string mathExpression, int widthOfThisKeyBlock, 
+        public DrawableMiyagiKeyCard(Game game, Rectangle viewPort, Texture2D backgroundRectangle, string nameOfShape, string mathExpression,
+            int widthOfThisKeyBlock,
             int heightOfThisKeyBlock, float xPos, float yPos, float zPos)
-            :base(game)
+            : base(game)
         {
-            spriteBatch = (SpriteBatch)Game.Services.GetService(typeof(SpriteBatch));
+
+            //IsLoadContentCalled is initialized to false. When it becomes true, this will prevent this.LoadContent() 
+            //from being called twice within the program.
+
+            IsLoadContentCalled = false;
+            spriteBatch = (SpriteBatch)game.Services.GetService(typeof(SpriteBatch));
+            spritefont = (SpriteFont)game.Services.GetService(typeof(SpriteFont));
+
+            this.LoadContent();
+            IsLoadContentCalled = true;
+
+            //Initializes the top math expression in the key-card
+            MathExpressionGamePiece = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
+                 viewPort, mathExpression, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos, zPos);
+
+
+            //Initializes the bottom shape in the key-card
+            LetterB = new DrawableGameMathExpression(backgroundRectangle, spriteBatch, spritefont, Color.Red,
+                 viewPort, nameOfShape, widthOfThisKeyBlock, heightOfThisKeyBlock, xPos, yPos +
+                 MathExpressionGamePiece.GetHeight(), zPos);
+
+
+
             game.Components.Add(this);
         }
 
         /// <summary>
-        /// Implementation Details:  
-        /// This method can be empty since the ShapeKey and MathExpressionGamePiece loads their own content.
+        /// Allows the spritefont to be loaded into the game components for the MathExpression to be created.
         /// 
         /// Make sure you prefix this declaration with "protected override void LoadContent()."
         /// 
@@ -166,9 +274,10 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         protected override void LoadContent()
         {
-            backgroundRect = Game.Content.Load<Texture2D>("MovingCircle");
-
-
+            if (IsLoadContentCalled == false)
+            {
+                spritefont = Game.Content.Load<SpriteFont>("Spritey");
+            }
         }
 
         /// <summary>
@@ -184,14 +293,66 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void SetPosition(float xPos, float yPos, float zPos)
         {
-            ShapeGamePiece.SetPosition(xPos,yPos,zPos);
+            MathExpressionGamePiece.SetPosition(xPos, yPos, zPos);
         }
 
+        /// <summary>
+        /// The purpose of this method is to constantly set the position of the math expression and the game shape correctly,
+        /// no matter which part of the keycard is scrolled over or what part of the keycard the user clicks. This keeps the game
+        /// shape anchored below the math expression, and the math expression anchored above the game shape.
+        /// </summary>
+        public void SetPositionAuxilary()
+        {
+            #region AnchorsUsedToDecideHowLettersMoveBasedOnWhichIsHighlighted
+
+            //If the mouse scrolls over the math expression part of the keycard, and it is NOT over the shape part
+            //of the keycard, then anchor the shape to always be below the math expression.
+            if (MathExpressionGamePiece.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)
+                &&
+                !(LetterB.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)))
+            {
+                LetterB.SetPosition(MathExpressionGamePiece.GetPosition().X, (MathExpressionGamePiece.GetPosition().Y +
+                    MathExpressionGamePiece.GetHeight()), 0);
+            }
+
+            //Or if the mouse scrolls over the shape part of the keycard, and it is NOT over the math expression part
+            //of the keycard, then anchor the math expression to always be above the shape.
+            else if (LetterB.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)
+                &&
+                !(MathExpressionGamePiece.RectangleEnclosingThisObject.Contains(Mouse.GetState().X, Mouse.GetState().Y)))
+            {
+                MathExpressionGamePiece.SetPosition(LetterB.GetPosition().X, (LetterB.GetPosition().Y - LetterB.GetHeight()), 0);
+            }
+
+            #endregion AnchorsUsedToDecideHowLettersMoveBasedOnWhichIsHighlighted
+
+            #region PositionBasedOnLetterSelection
+
+            //If the math expression was clicked by the user, then make sure the shape
+            //de-scales correctly to be below the math expression.
+            if (MathExpressionGamePieceWasClicked == true && LetterBWasClicked == false)
+            {
+                LetterB.SetPosition(MathExpressionGamePiece.GetPosition().X, (MathExpressionGamePiece.GetPosition().Y +
+                    MathExpressionGamePiece.HeightBeforeScaling), 0);
+            }
+
+            //Or if the shape was clicked by the user, then make sure the math expression
+            //de-scales correctly to be above the shape.
+            else if (MathExpressionGamePieceWasClicked == false && LetterBWasClicked == true)
+            {
+                MathExpressionGamePiece.SetPosition(LetterB.GetPosition().X, (LetterB.GetPosition().Y -
+                    LetterB.HeightBeforeScaling), 0);
+            }
+
+            #endregion PositionBasedOnLetterSelection
+
+        }
         /// <summary>
         /// Sets the size of this KeyCard.
         /// 
         /// Implementation details:
-        /// Remember that this class is built from two smaller visual components (the DrawableGameShape and the MathExpressionGamePiece).   So the height of the individual ShapeGamePiece and MathExpressionGamePiece should be half the height of the DrawableMiyagiKeyCard.
+        /// Remember that this class is built from two smaller visual components (the DrawableGameShape and the MathExpressionGamePiece).   
+        /// So the height of the individual ShapeGamePiece and MathExpressionGamePiece should be half the height of the DrawableMiyagiKeyCard.
         /// </summary>
         /// <param name="widthOfThisBlock">
         /// </param>
@@ -201,9 +362,19 @@ namespace HumanStorm.Miyagi.Framework
         /// </returns>
         public void SetSize(int widthOfThisBlock, int heightOfThisBlock)
         {
-            ShapeGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
-            MathExpressionGamePiece.SetPosition(ShapeGamePiece.GetPosition().X, (ShapeGamePiece.GetPosition().Y + ShapeGamePiece.GetHeight()), 0);
             MathExpressionGamePiece.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
+            
+            LetterB.SetPosition(MathExpressionGamePiece.GetPosition().X, (MathExpressionGamePiece.GetPosition().Y + 
+                MathExpressionGamePiece.GetHeight()), 0);
+            
+            LetterB.SetSize(widthOfThisBlock / 2, heightOfThisBlock / 2);
+        }
+
+
+        public override void Initialize()
+        {
+
+            base.Initialize();
         }
     } /* end class DrawableMiyagiKeyCard */
 }

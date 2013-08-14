@@ -19,64 +19,42 @@ namespace HumanStorm.Miyagi.Framework.UnitTests
     public class DrawableGameMathExpressionTests
     {
         [Test]
-        [Description("Tests whether input content is a valid math expression.")] 
-        [TestCase( "A", Result = true)]
-        [TestCase( "a", Result = false)]
-        [TestCase( "Z", Result = true)]
-        [TestCase( "b", Result = false)]
-        [TestCase( "B", Result = true)]
-        [TestCase( "1", Result = false)]
-        [TestCase( "1", Result = false)]
-        [TestCase( "a", Result = true)]
-        [TestCase( "h", Result = true)]
+        [Description("Tests whether input content is a valid math expression.")]
+        [TestCase("A", Result = true)]
+        [TestCase("a", Result = true)]
+        [TestCase("Z", Result = true)]
+        [TestCase("b", Result = true)]
+        [TestCase("B", Result = true)]
+        [TestCase("a", Result = true)]
+        [TestCase("h", Result = true)]
         [TestCase("b", Result = true)]
         [TestCase("z", Result = true)]
-        [TestCase("1", Result = false)]
-        [TestCase( "G", Result = false)]
+        [TestCase("G", Result = true)]
         [TestCase("A", Result = true)]
         [TestCase("-A", Result = true)]
-        [TestCase( "--A", Result = false)]
-        [TestCase( "---A", Result = false)]
-        public bool TestMathExpression( String contentName)
+        public bool TestValidMathExpressions(String contentName)
         {
             String pattern2 = @"^-?(?i)[A-Z]\z";
 
-            Texture2D testTexture2D;
+            DrawableGameMathExpression TestCard = new DrawableGameMathExpression(null, null,
+            null, Color.Red, new Rectangle(10, 10, 0, 0), contentName, 10, 10, 0, 0, 0);
 
-            Game tempGame = new Game();
-
-            //Just created to satisfy the required parameters of DrawableGameMathExpression
-            testTexture2D = new Texture2D(
-            tempGame.GraphicsDevice, 
-            tempGame.GraphicsDevice.PresentationParameters.BackBufferWidth,
-            tempGame.GraphicsDevice.PresentationParameters.BackBufferHeight, 
-            true,
-            tempGame.GraphicsDevice.PresentationParameters.BackBufferFormat
-            );
-
-            //DrawableGameMathExpression TestCard = new DrawableGameMathExpression(testTexture2D, new SpriteBatch(tempGame.GraphicsDevice), sharedSprite, , 20, 20, 0, 0, 0);
-            throw new NotImplementedException("This constructor is does not have the valid properties");
-
-            return System.Text.RegularExpressions.Regex.IsMatch(contentName, pattern2); 
+            return System.Text.RegularExpressions.Regex.IsMatch(contentName, pattern2);
         }
 
-        [Test(Description="Verifies that when the mouse is over anywhere in the top half of the keyblock, that the key-card is enlarged.")]
-        public void TestInputDeviceCursorOverTopHalfOfKeyCard()
+        [Test]
+        [Description("Tests whether input content is an invalid math expression.")]
+        [TestCase("1")]
+        [TestCase("--A")]
+        [TestCase("---A")]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void TestInvalidMathExpressions(String contentName)
         {
-            throw new NotImplementedException();
+            DrawableGameMathExpression TestCard = new DrawableGameMathExpression(null, null,
+            null, Color.Red, new Rectangle(10, 10, 0, 0), contentName, 10, 10, 0, 0, 0);
         }
 
-        [Test(Description = "Verifies that when the mouse is over anywhere in the bottom half of the keyblock, that the key-card is enlarged.")]
-        public void TestInputDeviceCursorOverBottomHalfOfKeyCard()
-        {
-            throw new NotImplementedException();
-        }
-
-        [Test(Description = "Verifies that when the mouse is NOT over either key-block, that the key-card is NOT enlarged.")]
-        public void TestInputDeviceCursorNotOverTopPartOfKeyCard()
-        {
-            throw new NotImplementedException();
-        }
+       
 
     }
 }
