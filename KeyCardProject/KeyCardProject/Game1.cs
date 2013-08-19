@@ -57,7 +57,7 @@ namespace HumanStorm.Miyagi.Framework
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), spriteBatch);
-            test = new DrawableGameShape("square", backgroundRect, Color.Blue, spriteBatch, new Rectangle(0, 0, 50, 50), 300, 300, 20, 20, 0);
+            test = new DrawableGameShape("square", backgroundRect, Color.Blue, spriteBatch, new Rectangle(0, 0, 50, 50), 300, 300, 100, 50, 0);
             test.LoadContent(this.Content);            
 
             // TODO: use this.Content to load your game content here

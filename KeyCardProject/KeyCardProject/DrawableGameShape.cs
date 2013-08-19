@@ -129,7 +129,6 @@ namespace HumanStorm.Miyagi.Framework
                 this.SharedSpriteBatch.Draw(backgroundRectangle, SetGameShapePositionAndScale(),ScaledRectangleEnclosingThisObject, Color.Green);
                 this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, ScaledTextureWidth, ScaledTextureHeight), base.ColorOfShape);
                 this.SharedSpriteBatch.End();
-
             }
             else
             {
@@ -144,9 +143,8 @@ namespace HumanStorm.Miyagi.Framework
 
         public override void Update(GameTime time)
         {
-            if (this.RectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,
-                (int)this.GetScreenCoordinatesOfMouse().Y) || this.ScaledRectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,
-                (int)this.GetScreenCoordinatesOfMouse().Y))
+            if (this.RectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X,(int)this.GetScreenCoordinatesOfMouse().Y)
+                || this.ScaledRectangleEnclosingThisObject.Contains((int)this.GetScreenCoordinatesOfMouse().X, (int)this.GetScreenCoordinatesOfMouse().Y))
             {
                 //if the mouse hovers over the rectangle, expand the rectangle to scaled size from its center.
                 this.SetColor(Color.Red);
@@ -167,7 +165,7 @@ namespace HumanStorm.Miyagi.Framework
             else
             {
 
-                //But if not, draw the original rectangle on the screen and de-scale it from the center.
+                // But if not, draw the original rectangle on the screen and de-scale it from the center.
                 this.SetColor(Color.Blue);
                 Vector2 scaledRectangleCenter = new Vector2(this.RectangleEnclosingThisObject.Center.X,
                     this.RectangleEnclosingThisObject.Center.Y);
@@ -193,6 +191,10 @@ namespace HumanStorm.Miyagi.Framework
             xScaledPosition = xCenter - (.5f * ScaledRectangleEnclosingThisObject.Width);
             yScaledPosition = yCenter - (.5f * ScaledRectangleEnclosingThisObject.Height);
 
+            // Update position coordinates of the scaled rectangle
+            this.ScaledRectangleEnclosingThisObject.X = (int)xScaledPosition;
+            this.ScaledRectangleEnclosingThisObject.Y = (int)yScaledPosition;
+
             return new Vector2(xScaledPosition, yScaledPosition);
         }
 
@@ -208,18 +210,5 @@ namespace HumanStorm.Miyagi.Framework
             return new Vector2(xPos, yPos);
         }
 
-        public bool IsMouseOver(MouseState mouseState)
-        {
-            if (IsSelected)
-            {
-                return ((mouseState.X > xScaledPosition) && (mouseState.X < (xScaledPosition + GetWidth() * SCALE_FACTOR)) &&
-                    (mouseState.Y > yScaledPosition) && (mouseState.Y < (yScaledPosition + GetHeight() * SCALE_FACTOR)));
-            }
-            else
-            {
-                return ((mouseState.X > GetPosition().X) && (mouseState.X < (ViewPort.X + ViewPort.Width)) &&
-                    (mouseState.Y > GetPosition().Y) && (mouseState.Y < (ViewPort.Y + ViewPort.Height)));
-            }
-        }
     } 
 }
