@@ -56,7 +56,7 @@ namespace HumanStorm.Miyagi.Framework
     /// <summary>
     /// Position of normal container
     /// </summary>
-    Vector2 cardPosition;
+
     /// <summary>
     /// X coordinate of enlargened container
     /// </summary>
@@ -121,10 +121,14 @@ namespace HumanStorm.Miyagi.Framework
         {
             if (IsTargeted)
             {
+                /****************************
+                 LOGIC FOR SCALING TEXTURE SHAPE
+                 ****************************/
                 int ScaledTextureWidth = ScaledRectangleEnclosingThisObject.Width / 2;
                 int ScaledTextureHeight = ScaledRectangleEnclosingThisObject.Height / 2;
                 TextureX = (int)(xScaledPosition + ScaledRectangleEnclosingThisObject.Width / 2 - ScaledTextureWidth / 2);
                 TextureY = (int)(yScaledPosition + ScaledRectangleEnclosingThisObject.Height / 2 - ScaledTextureHeight / 2);
+                // Draw the scaled keycard
                 this.SharedSpriteBatch.Begin();
                 this.SharedSpriteBatch.Draw(backgroundRectangle, SetGameShapePositionAndScale(),ScaledRectangleEnclosingThisObject, Color.Green);
                 this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, ScaledTextureWidth, ScaledTextureHeight), base.ColorOfShape);
@@ -132,8 +136,10 @@ namespace HumanStorm.Miyagi.Framework
             }
             else
             {
+                //Texture shape logic
                 TextureX = RectangleEnclosingThisObject.X + RectangleEnclosingThisObject.Width / 2 - TextureWidth / 2;
                 TextureY = RectangleEnclosingThisObject.Y + RectangleEnclosingThisObject.Height / 2 - TextureHeight / 2;
+                // Draw the normal keycard
                 this.SharedSpriteBatch.Begin();
                 this.SharedSpriteBatch.Draw(backgroundRectangle, RectangleEnclosingThisObject, Color.Green);
                 this.SharedSpriteBatch.Draw(TextureForShape, new Rectangle(TextureX, TextureY, TextureWidth, TextureHeight), base.ColorOfShape);
@@ -160,6 +166,7 @@ namespace HumanStorm.Miyagi.Framework
                 Vector2 displacement = Vector2.Subtract(scaledRectangleCenter, originalRectangleCenter);
 
                 this.SetPosition(this.Position.X - displacement.X, this.Position.Y - displacement.Y);
+                this.DragKeyCard();
             }
 
             else
@@ -183,6 +190,45 @@ namespace HumanStorm.Miyagi.Framework
 
         }
 
+        public void DragKeyCard()
+        {
+            MouseState ms = Mouse.GetState();
+
+            if (dragging == false)
+            {
+                if (ms.LeftButton == ButtonState.Pressed)
+                {
+                    dragging = true;
+                    // On initial click on object, record the mouse state
+                    MouseState currentMouseState = Mouse.GetState();
+                    PrevMouseState = currentMouseState;                    
+                }
+            }
+            else
+            {
+                // If dragging is true, keep updating currentMouseState
+                MouseState currentMouseState = Mouse.GetState();
+                // If mouse position has moved, move keycard object by its displacement
+                if (PrevMouseState.X != currentMouseState.X || PrevMouseState.Y != currentMouseState.Y)
+                {
+                    xDisplacement = currentMouseState.X - PrevMouseState.X;
+                    yDisplacement = currentMouseState.Y - PrevMouseState.Y;
+                }
+                this.SetPosition(this.GetPosition().X + xDisplacement, this.GetPosition().Y + yDisplacement);
+                //cardPosition = new Vector2(cardPosition.X + xDisplacement, cardPosition.Y + yDisplacement);
+
+                if (ms.LeftButton == ButtonState.Released)
+                {
+                    dragging = false;
+                }
+
+                // Update placement variables (reset displacement back to 0)
+                PrevMouseState = currentMouseState;
+                xDisplacement = 0;
+                yDisplacement = 0;
+            }
+        }
+
         public Vector2 SetGameShapePositionAndScale()
         {
             xCenter = RectangleEnclosingThisObject.X + (.5f * (float)RectangleEnclosingThisObject.Width);
@@ -202,13 +248,5 @@ namespace HumanStorm.Miyagi.Framework
         {
             base.ColorOfShape = color;
         }
-
-        public Vector2 SetPositionOfShape()
-        {
-            float xPos = base.ViewPort.X + (base.ViewPort.Width / 2) - base.GetWidth() / 2;
-            float yPos = base.ViewPort.Y + (base.ViewPort.Height / 2) - base.GetHeight() / 2;
-            return new Vector2(xPos, yPos);
-        }
-
     } 
 }
